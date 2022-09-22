@@ -114,7 +114,7 @@ class DB_1 extends DB_Config
 
     public function insert($table, $values)
     {
-        $query = "INSERT INTO $table VALUES($values)";
+        $query = "INSERT INTO $table VALUES ($values)";
         $run = $this->mysqli->query($query);
         if ($run) {
             return TRUE;
@@ -125,7 +125,7 @@ class DB_1 extends DB_Config
 
     public function insertCols($table, $columns, $values)
     {
-        $query = "INSERT INTO $table($columns) VALUES($values)";
+        $query = "INSERT INTO $table ($columns) VALUES ($values)";
         $run = $this->mysqli->query($query);
         if ($run) {
             return TRUE;
