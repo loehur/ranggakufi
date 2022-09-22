@@ -130,7 +130,7 @@ class CS_Problem extends Controller
             if ($fileSize > 1000000) {
                compressImage($imageTemp, $imageUploadPath, 20);
                $query = $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
-               if ($query) {
+               if ($query == true) {
                   echo "1";
                } else {
                   echo $query['error'];
@@ -138,7 +138,7 @@ class CS_Problem extends Controller
             } else {
                move_uploaded_file($imageTemp, $imageUploadPath);
                $query = $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
-               if ($query) {
+               if ($query == true) {
                   echo "1";
                } else {
                   echo $query['error'];
