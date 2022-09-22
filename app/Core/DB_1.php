@@ -1,5 +1,4 @@
 <?php
-
 require_once 'app/Config/DB_Config.php';
 
 class DB_1 extends DB_Config
@@ -45,16 +44,26 @@ class DB_1 extends DB_Config
         return $reply;
     }
 
-    public function get_cols_where($table, $cols, $where)
+    public function get_cols_where($table, $cols, $where, $row)
     {
         $reply = [];
         $query = "SELECT $cols FROM $table WHERE $where";
         $result = $this->mysqli->query($query);
-
-        while ($row = $result->fetch_assoc())
-            $reply[] = $row;
-
-        return $reply;
+        if ($result) {
+            switch ($row) {
+                case "0":
+                    $reply = $result->fetch_assoc();
+                    return $reply;
+                    break;
+                case "1";
+                    while ($data = $result->fetch_assoc())
+                        $reply[] = $data;
+                    return $reply;
+                    break;
+            }
+        } else {
+            return array('query' => $query, 'info' => $this->mysqli->error);
+        }
     }
 
     public function get_cols_groubBy($table, $cols, $groupBy)
@@ -110,7 +119,7 @@ class DB_1 extends DB_Config
         if ($run) {
             return TRUE;
         } else {
-            return array('query' => $query, 'error' => $this->mysqli->error);
+            return array('query' => $query, 'info' => $this->mysqli->error);
         }
     }
 
@@ -121,7 +130,7 @@ class DB_1 extends DB_Config
         if ($run) {
             return TRUE;
         } else {
-            return array('query' => $query, 'error' => $this->mysqli->error);
+            return array('query' => $query, 'info' => $this->mysqli->error);
         }
     }
 
@@ -138,7 +147,7 @@ class DB_1 extends DB_Config
         if ($run) {
             return TRUE;
         } else {
-            return array('query' => $query, 'error' => $this->mysqli->error);
+            return array('query' => $query, 'info' => $this->mysqli->error);
         }
     }
 
@@ -148,26 +157,20 @@ class DB_1 extends DB_Config
         $result = $this->mysqli->query($query);
 
         $reply = $result->fetch_array();
-        return $reply[0];
+        if ($reply) {
+            return $reply[0];
+        } else {
+            return array('query' => $query, 'info' => $this->mysqli->error);
+        }
     }
 
     public function query($query)
     {
-        $run = $this->mysqli->query($query);
-        if ($run) {
+        $runQuery = $this->mysqli->query($query);
+        if ($runQuery) {
             return TRUE;
         } else {
-            return array('query' => $query, 'error' => $this->mysqli->error);
-        }
-    }
-
-    public function multi_query($query)
-    {
-        $run = $this->mysqli->multi_query($query);
-        if ($run) {
-            return TRUE;
-        } else {
-            return array('query' => $query, 'error' => $this->mysqli->error);
+            return FALSE;
         }
     }
 

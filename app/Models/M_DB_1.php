@@ -14,12 +14,7 @@ class M_DB_1
         return $this->db->query($query);
     }
 
-    public function multi_query($query)
-    {
-        return $this->db->multi_query($query);
-    }
-
-
+    //GET
     public function get($table)
     {
         return $this->db->get($table);
@@ -30,9 +25,9 @@ class M_DB_1
         return $this->db->get_where($table, $where);
     }
 
-    public function get_cols_where($table, $cols, $where)
+    public function get_cols_where($table, $cols, $where, $row)
     {
-        return $this->db->get_cols_where($table, $cols, $where);
+        return $this->db->get_cols_where($table, $cols, $where, $row);
     }
 
     public function get_cols_groubBy($table, $cols, $groupBy)
@@ -55,10 +50,13 @@ class M_DB_1
         return $this->db->get_where_row($table, $where);
     }
 
+    //====================================================== COUNT//
     public function count_where($table, $where)
     {
         return $this->db->count_where($table, $where);
     }
+
+    //===========================================================
 
     public function insert($table, $values)
     {

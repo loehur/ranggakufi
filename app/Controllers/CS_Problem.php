@@ -120,7 +120,7 @@ class CS_Problem extends Controller
       }
 
       $imageUploadPath =  $uploads_dir . '/' . $file_name;
-      $allowExt   = array('png', 'jpg', 'jpeg');
+      $allowExt   = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
       $fileType = pathinfo($imageUploadPath, PATHINFO_EXTENSION);
       $imageTemp = $_FILES['resi']['tmp_name'];
       $fileSize   = $_FILES['resi']['size'];
