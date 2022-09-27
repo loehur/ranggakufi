@@ -71,7 +71,7 @@ class Upload extends Controller
                      $succCount++;
                   } else {
                      $upStatus = 'Import Stopped!';
-                     $failedMsg = $queryExecute['info'] . "<br>Failed Insert: " . $lastInsert;
+                     $failedMsg = $queryExecute['info'] . "<br>" . $queryExecute['query'] . "<br>Failed Insert: " . $lastInsert;
                      break;
                   }
                   if ($no == 2000) {
