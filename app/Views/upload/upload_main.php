@@ -22,8 +22,8 @@
           <div class="card-body p-2">
             <form action="<?= $this->BASE_URL; ?>Upload/importHourly" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="exampleFormControlFile1">Format : <i>System</i> | TL | OM</label>
                 <input type="file" class="form-control-file" name="file" required>
+                <small>date | ticket_category | ranking | assign_to | employee_id | role | allocated_amount | repay_principal | repay_interest | total_repay_amount | rate_of_return | target_repay_rate | diff_target_repay_amount | new_assign_num | handle_times | handle_num | complete_num | load_num | singleMultiple_periods | first_loanReloan | total_call | tl | om</small>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-sm btn-info">Import HOURLY</button>
@@ -40,8 +40,8 @@
           <div class="card-body p-2">
             <form action="<?= $this->BASE_URL; ?>Upload/importDaily" method="post" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="exampleFormControlFile1">Format : <i>System</i> | TL | OM</label>
                 <input type="file" class="form-control-file" name="file" required>
+                <small>date | ticket_category | ranking | assign_to | employee_id | role | allocated_amount | repay_principal | repay_interest | total_repay_amount | rate_of_return | target_repay_rate | diff_target_repay_amount | new_assign_num | handle_times | handle_num | complete_num | load_num | singleMultiple_periods | first_loanReloan | total_call | tl | om</small>
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-sm btn-primary">Import DAILY</button>
