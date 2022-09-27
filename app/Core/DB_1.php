@@ -170,7 +170,7 @@ class DB_1 extends DB_Config
         if ($runQuery) {
             return TRUE;
         } else {
-            return FALSE;
+            return array('query' => $query, 'info' => $this->mysqli->error);
         }
     }
 
