@@ -54,7 +54,7 @@ class Upload extends Controller
                   $load_num = $line[17];
                   $singleMultiple_periods = $line[18];
                   $first_loanReloan = $line[19];
-                  $total_call = $line[20] || 0;
+                  $total_call = ($line[20] == '') ? 0 : $line[20];
                   $tl = $line[21];
                   $om = $line[22];
 
