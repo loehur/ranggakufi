@@ -63,7 +63,7 @@ class Upload extends Controller
                   $simID = str_replace("KUFI-", "", $employee_id);
                   $primary = $simDate . $simID . $allocated_amount . $total_repay_amount;
 
-                  $vals =  "'" . $primary . "','" . $date . "','" . $ticket_category . "','" . $ranking . "','" . $assign_to . "','" . $employee_id . "','" . $allocated_amount . "','" . $repay_principal . "','" . $repay_interest . "','" . $total_repay_amount . "','" . $rate_of_return . "','" . $target_repay_rate . "','" . $diff_target_repay_amount . "','" . $new_assign_num . "','" . $handle_times . "','" . $handle_num . "','" . $complete_num . "','" . $load_num . "','" . $singleMultiple_periods . "','" . $first_loanReloan . "','" . $total_call . "','" . $tl . "','" . $om . "','" . $dateNow . "'";
+                  $vals =  "'" . $primary . "','" . $date . "','" . $ticket_category . "','" . $ranking . "','" . $assign_to . "','" . $employee_id . "','" . $role . "','" . $allocated_amount . "','" . $repay_principal . "','" . $repay_interest . "','" . $total_repay_amount . "','" . $rate_of_return . "','" . $target_repay_rate . "','" . $diff_target_repay_amount . "','" . $new_assign_num . "','" . $handle_times . "','" . $handle_num . "','" . $complete_num . "','" . $load_num . "','" . $singleMultiple_periods . "','" . $first_loanReloan . "','" . $total_call . "','" . $tl . "','" . $om . "','" . $dateNow . "'";
                   $query = "INSERT INTO data_daily VALUES(" . $vals . ");";
                   $lastInsert = $realDate . " " . $employee_id;
 
