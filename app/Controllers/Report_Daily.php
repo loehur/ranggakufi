@@ -51,13 +51,13 @@ class Report_Daily extends Controller
       }
 
       $data2 = array();
-      $data = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where);
+      $data = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where, 1);
       if (($label == 'om') && (strlen($base2) > 0)) {
          $omDvs = explode("->", $base2);
          $idOM = $omDvs[0];
          $dvcOM = $omDvs[1];
          $where = "(SUBSTRING(date_,1,10) BETWEEN '" . $dateF . "' AND '" . $dateT . "') AND " . $label . " = '" . $idOM . "' AND ticket_category = '" . $dvcOM . "' GROUP BY date_ ORDER BY date_ ASC";
-         $data2 = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where);
+         $data2 = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where, 1);
 
          foreach ($this->dEmp as $a) {
             if ($a['employee_id'] == $idOM) {
@@ -82,7 +82,7 @@ class Report_Daily extends Controller
          $where = "(SUBSTRING(date_,1,11) BETWEEN '" . $dateF . "' AND '" . $dateT . "') GROUP BY " . $tipe . " ORDER BY date_ ASC";
       }
 
-      $list = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $list = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       $newList = array();
       foreach ($list as $b) {
          switch ($tipe) {
@@ -175,7 +175,7 @@ class Report_Daily extends Controller
             break;
       }
 
-      $data = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where);
+      $data = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where, 1);
       $this->view($view, ['data' => $data, 'dvc' => $dvc]);
    }
 }

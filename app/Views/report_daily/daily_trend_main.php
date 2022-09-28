@@ -402,7 +402,7 @@ $currentDay = date('d');
 <script src="<?= $this->ASSETS_URL ?>js/popper.min.js"></script>
 <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="<?= $this->ASSETS_URL ?>js/chart.min.js"></script>
+<script src="<?= $this->ASSETS_URL ?>js/Chart.min.js"></script>
 
 <script>
   $(document).ready(function() {
@@ -433,7 +433,7 @@ $currentDay = date('d');
     $('span#spinner').addClass('spinner-border spinner-border-sm');
     var base = $('form#' + tc).find('select[name="' + tc + '"]').val();
     var base2 = $('form#' + tc).find('select[name="' + tc + '2"]').val();
-    $.ajax({
+    var request = $.ajax({
       url: "<?= $this->BASE_URL ?>Report_Daily/trend_data/" + tc + "/" + base + "/" + base2,
       data: $("form#main").serialize(),
       type: "POST",

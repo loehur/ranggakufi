@@ -69,14 +69,14 @@ class Report_Monthly extends Controller
          $dateFrom = $a[0];
          $dateTo = $a[1];
          $where = "ticket_category = '" . $dvc . "' AND (SUBSTRING(date_,1,11) BETWEEN '" . $dateFrom . "' AND '" . $dateTo . "') GROUP BY " . $level . " " . $order;
-         $data[$dateFrom . " To " . $dateTo] = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where);
+         $data[$dateFrom . " To " . $dateTo] = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $cols, $where, 1);
       }
 
       $colsSummary = $parCol . ', AVG(allocated_amount) as avgAA, AVG(total_repay_amount) as avgTRA, (SUM(total_repay_amount)/SUM(allocated_amount)) AS repRate';
       $where = "ticket_category = '" . $dvc . "' AND (SUBSTRING(date_,1,11) BETWEEN '" . $dateF . "' AND '" . $dateT . "') GROUP BY " . $level . " " . $order;
 
       if ($level <>  "employee_id") {
-         $summary = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $colsSummary, $where);
+         $summary = $this->model('M_DB_1')->get_cols_where($this->tableDaily, $colsSummary, $where, 1);
       } else {
          $summary = array();
       }

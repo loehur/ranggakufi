@@ -33,7 +33,7 @@ class Report_Hourly extends Controller
          $where = "date_ LIKE '" . $date . "%' AND om = '" . $idOM . "' AND ticket_category = '" . $dvcOM . "' GROUP BY date_";
       }
 
-      $data = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $data = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       $dateEOD = $_POST['Y'] . "-" . $_POST['m'] . "-" . $_POST['d'];
       $cols = 'AVG(total_repay_amount) as avgTRA, (SUM(total_repay_amount)/SUM(allocated_amount))*100 AS repRate';
 
@@ -42,7 +42,7 @@ class Report_Hourly extends Controller
       } else {
          $where = "date_ LIKE '" . $dateEOD . "%' AND om = '" . $idOM . "' AND ticket_category = '" . $dvcOM . "' GROUP BY date_";
       }
-      $dataEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $dataEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
 
       if ($label <> 'ticket_category') {
          if ($label == 'om') {
@@ -77,7 +77,7 @@ class Report_Hourly extends Controller
       }
 
 
-      $list = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $list = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       $newList = array();
       foreach ($list as $b) {
          switch ($tipe) {
@@ -209,7 +209,7 @@ class Report_Hourly extends Controller
                break;
          }
       }
-      $data = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $data = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       $this->view($view, ['data' => $data, 'dvc' => $dvc]);
    }
 
@@ -245,31 +245,31 @@ class Report_Hourly extends Controller
          $order = " ORDER BY repRate DESC";
          $cols = 'om, SUM(total_repay_amount)/SUM(allocated_amount) AS result';
          $where = "ticket_category = '" . $dvc . "' AND date_ = '" . $yesterday . "17' GROUP BY om ORDER BY result DESC";
-         $yest = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+         $yest = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
          $cols = 'om, SUM(total_repay_amount)/SUM(allocated_amount) AS result';
          $where = "ticket_category = '" . $dvc . "' AND date_ LIKE '" . $yesterdayEOD . "%' GROUP BY om ORDER BY result DESC";
-         $yestEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+         $yestEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       } else {
          $dvcTipe = 0;
          $order = " ORDER BY avgTRA DESC";
          $cols = 'om, AVG(total_repay_amount) as result';
          $where = "ticket_category = '" . $dvc . "' AND date_ = '" . $yesterday . "17' GROUP BY om ORDER BY result DESC";
-         $yest = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+         $yest = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
          $cols = 'om, AVG(total_repay_amount) as result';
          $where = "ticket_category = '" . $dvc . "' AND date_ LIKE '" . $yesterdayEOD . "%' GROUP BY om ORDER BY result DESC";
-         $yestEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+         $yestEOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       }
 
       foreach ($this->dHour as $a) {
          $jam = $a['hour'];
          $cols = 'date_, om, AVG(handle_times) as avgHT, AVG(total_call) as avgTC, AVG(allocated_amount) as avgAA, AVG(total_repay_amount) as avgTRA, (SUM(total_repay_amount)/SUM(allocated_amount)) AS repRate';
          $where = "ticket_category = '" . $dvc . "' AND date_ = '" . $date . $jam . "' GROUP BY om" . $order;
-         $data[$jam] = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+         $data[$jam] = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
       }
 
       $cols = 'date_, om, AVG(handle_times) as avgHT, AVG(total_call) as avgTC, AVG(allocated_amount) as avgAA, AVG(total_repay_amount) as avgTRA, (SUM(total_repay_amount)/SUM(allocated_amount)) AS repRate';
       $where = "ticket_category = '" . $dvc . "' AND date_ LIKE '" . $todayEOD . "%' GROUP BY om" . $order;
-      $EOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where);
+      $EOD = $this->model('M_DB_1')->get_cols_where($this->tableHourly, $cols, $where, 1);
 
 
       $this->view($view, ['data' => $data, 'yest' => $yest, 'EOD' => $EOD, 'yestEOD' => $yestEOD, 'dvcTipe' => $dvcTipe]);
