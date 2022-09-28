@@ -7,7 +7,7 @@ class Upload extends Controller
       $this->session_cek();
       $this->data();
       $this->table = 'user';
-      $this->maxRows = 100;
+      $this->maxRows = 2000;
       $this->uploadResult[1] = 0;
       $this->uploadResult[2] = 0;
       $this->dateNow = date('YmdHis');
