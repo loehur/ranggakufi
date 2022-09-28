@@ -7,6 +7,10 @@ class Upload extends Controller
       $this->session_cek();
       $this->data();
       $this->table = 'user';
+      $this->maxRows = 100;
+      $this->uploadResult[1] = 0;
+      $this->uploadResult[2] = 0;
+      $this->dateNow = date('YmdHis');
    }
 
    public function index()
@@ -15,23 +19,19 @@ class Upload extends Controller
       $data = array();
       $pageInfo = ['title' => 'Upload'];
       $data = $this->model('M_DB_1')->get($this->table);
+
       $this->view('layout', ['pageInfo' => $pageInfo]);
       $this->view($view, ['data' => $data]);
    }
 
-   public function importDaily()
+   public function importHourlyDaily()
    {
-      $succCount = 0;
-      $failedMsg = "";
-      $upStatus = 'Import Complete!';
-      $dateNow = date('YmdHis');
       if ($_FILES["file"]["size"] > 0) {
          if (is_uploaded_file($_FILES['file']['tmp_name'])) {
             $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
             fgetcsv($csvFile);
             $no = 0;
             while (($line = fgetcsv($csvFile)) !== FALSE) {
-               $no++;
                $date = $line[0];
                if (strlen($date) > 0) {
                   $ticket_category = $line[1];
@@ -63,107 +63,53 @@ class Upload extends Controller
                   $simID = str_replace("KUFI-", "", $employee_id);
                   $primary = $simDate . $simID . $allocated_amount . $total_repay_amount;
 
-                  $vals =  "'" . $primary . "','" . $date . "','" . $ticket_category . "','" . $ranking . "','" . $assign_to . "','" . $employee_id . "','" . $role . "','" . $allocated_amount . "','" . $repay_principal . "','" . $repay_interest . "','" . $total_repay_amount . "','" . $rate_of_return . "','" . $target_repay_rate . "','" . $diff_target_repay_amount . "','" . $new_assign_num . "','" . $handle_times . "','" . $handle_num . "','" . $complete_num . "','" . $load_num . "','" . $singleMultiple_periods . "','" . $first_loanReloan . "'," . $total_call . ",'" . $tl . "','" . $om . "','" . $dateNow . "'";
+                  $vals =  "'" . $primary . "','" . $date . "','" . $ticket_category . "','" . $ranking . "','" . $assign_to . "','" . $employee_id . "','" . $role . "','" . $allocated_amount . "','" . $repay_principal . "','" . $repay_interest . "','" . $total_repay_amount . "','" . $rate_of_return . "','" . $target_repay_rate . "','" . $diff_target_repay_amount . "','" . $new_assign_num . "','" . $handle_times . "','" . $handle_num . "','" . $complete_num . "','" . $load_num . "','" . $singleMultiple_periods . "','" . $first_loanReloan . "'," . $total_call . ",'" . $tl . "','" . $om . "','" . $this->dateNow . "'";
                   $query = "INSERT INTO data_daily VALUES(" . $vals . ");";
                   $lastInsert = $realDate . " " . $employee_id;
 
                   $queryExecute = $this->model('M_DB_1')->query($query);
                   if ($queryExecute == 1) {
-                     $succCount++;
+                     $this->uploadResult[1] += 1;
+                     $no++;
                   } else {
-                     $upStatus = 'Import Stopped!';
-                     $failedMsg = $queryExecute['info'] . "<br>" . $queryExecute['query'] . "<br>Failed Insert: " . $lastInsert;
-                     break;
+                     $this->uploadResult[2] += 1;
+                     if (!isset($firstError)) {
+                        $firstError = $queryExecute['info'] . "<br>" . $queryExecute['query'] . "<br>Failed Insert: " . $lastInsert;
+                     }
+                     $lastError = $queryExecute['info'] . "<br>" . $queryExecute['query'] . "<br>Failed Insert: " . $lastInsert;
                   }
-                  if ($no == 2000) {
-                     $upStatus = 'Import Stopped!';
-                     $failedMsg = "2000 Rows Limit Reach! <br>Last Inserted: " . $lastInsert;
+                  if ($no == $this->maxRows) {
+                     $upStatus = "<b>Import Completed</b><br>" . $this->maxRows . " Rows Limit Reached! <br>Last Inserted: " . $lastInsert;
                      break;
                   }
                }
             }
             fclose($csvFile);
          } else {
-            $upStatus = 'Error Data Row!';
+            $upStatus = '<b>Error Data Row!</b>';
          }
       } else {
-         $upStatus = 'Invalid File!';
+         $upStatus = '<b>Invalid File!</b>';
       }
-      $msg = $upStatus . "<hr>[" . $succCount . "] INSERTED<hr>" . $failedMsg;
-      echo $msg;
-   }
-
-   public function importHourly()
-   {
-      $succCount = 0;
-      $failedMsg = "";
-      $upStatus = 'Import Complete!';
-      $dateNow = date('YmdHis');
-      if ($_FILES["file"]["size"] > 0) {
-         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
-            fgetcsv($csvFile);
-            $no = 0;
-            while (($line = fgetcsv($csvFile)) !== FALSE) {
-               $date = $line[0];
-               if (strlen($date) > 0) {
-                  $ticket_category = $line[1];
-                  $ranking = $line[2];
-                  $assign_to = $line[3];
-                  $assign_to = str_replace("'", "", $assign_to);
-                  $employee_id = $line[4];
-                  $role = $line[5];
-                  $allocated_amount = $line[6];
-                  $repay_principal = $line[7];
-                  $repay_interest = $line[8];
-                  $total_repay_amount = $line[9];
-                  $rate_of_return = $line[10];
-                  $target_repay_rate = $line[11];
-                  $diff_target_repay_amount = $line[12];
-                  $new_assign_num = $line[13];
-                  $handle_times = $line[14];
-                  $handle_num = $line[15];
-                  $complete_num = $line[16];
-                  $load_num = $line[17];
-                  $singleMultiple_periods = $line[18];
-                  $first_loanReloan = $line[19];
-                  $total_call = ($line[20] == '') ? 0 : $line[20];
-                  $tl = $line[21];
-                  $om = $line[22];
-
-                  $realDate = substr($date, 0, 10);
-                  $simDate = str_replace("-", "", $realDate);
-                  $simID = str_replace("KUFI-", "", $employee_id);
-                  $primary = $simDate . $simID . $allocated_amount . $total_repay_amount;
-
-                  $vals =  "'" . $primary . "','" . $date . "','" . $ticket_category . "','" . $ranking . "','" . $assign_to . "','" . $employee_id . "','" . $role . "','" . $allocated_amount . "','" . $repay_principal . "','" . $repay_interest . "','" . $total_repay_amount . "','" . $rate_of_return . "','" . $target_repay_rate . "','" . $diff_target_repay_amount . "','" . $new_assign_num . "','" . $handle_times . "','" . $handle_num . "','" . $complete_num . "','" . $load_num . "','" . $singleMultiple_periods . "','" . $first_loanReloan . "'," . $total_call . ",'" . $tl . "','" . $om . "','" . $dateNow . "'";
-                  $query = "INSERT INTO data_hourly VALUES(" . $vals . ");";
-                  $lastInsert = $realDate . " " . $employee_id;
-
-                  $queryExecute = $this->model('M_DB_1')->query($query);
-                  if ($queryExecute == 1) {
-                     $succCount++;
-                  } else {
-                     $upStatus = 'Import Stopped!';
-                     $failedMsg = $queryExecute['info'] . "<br>" . $queryExecute['query'] . "<br>Failed Insert: " . $lastInsert;
-                     break;
-                  }
-                  if ($no == 2000) {
-                     $upStatus = 'Import Stopped!';
-                     $failedMsg = "2000 Rows Limit Reach! <br>Last Inserted: " . $lastInsert;
-                     break;
-                  }
-               }
-            }
-            fclose($csvFile);
-         } else {
-            $upStatus = 'Error Data Row!';
+      echo $upStatus . "<hr><b>Upload Result</b><br>";
+      $resultStatus = "";
+      foreach ($this->uploadResult as $key => $val) {
+         switch ($key) {
+            case 1:
+               $resultStatus = "Success";
+               break;
+            case 2:
+               $resultStatus = "Skipped";
+               break;
          }
-      } else {
-         $upStatus = 'Invalid File!';
+         echo "[" . $resultStatus . "] " . $val . "<br>";
       }
-      $msg = $upStatus . "<hr>[" . $succCount . "] INSERTED<hr>" . $failedMsg;
-      echo $msg;
+      if (isset($firstError)) {
+         echo "<hr><b>First Skipped</b><br>" . $firstError . "<br>";
+      }
+      if (isset($lastError)) {
+         echo "<hr><b>Last Skipped</b><br>" . $lastError . "<br>";
+      }
    }
 
    public function importStaff()
