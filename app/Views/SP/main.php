@@ -140,11 +140,37 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col">
+                    <label for="exampleInputEmail1">TL</label>
+                    <select name="f5" class="tize form-control form-control-sm p-0 m-0" required>
+                      <option value="" selected disabled>...</option>
+                      <?php foreach ($data['tl'] as $a) { ?>
+                        <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <label for="exampleInputEmail1">OM</label>
+                    <select name="f6" class="tize form-control form-control-sm p-0 m-0" required>
+                      <option value="" selected disabled>...</option>
+                      <?php foreach ($data['om'] as $a) { ?>
+                        <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
                     <label for="exampleInputEmail1">Remark</label>
                     <input type="text" name="f4" class="form-control" id="exampleInputEmail1" placeholder="" required>
                   </div>
                   <div class="col">
-                    <label>File SP (<span class="text-danger">Max. 10mb</span>)</label>
+                    <label>SP - PDF FILE (<span class="text-danger">Max. 10mb</span>)</label>
                     <input type="file" id="file" name="file" required /> [ <span id="persen"><b>0</b></span><b> %</b> ] Upload Progress
                   </div>
                 </div>

@@ -47,8 +47,11 @@ class SP extends Controller
          $send[$a['emp_id']][$a['id_sp']] = $a;
       }
       $staff = $this->model('M_DB_1')->get("master_staff");
+      $tl = $this->model('M_DB_1')->get("master_tl");
+      $om = $this->model('M_DB_1')->get("master_om");
+
       $this->view('layout', ['pageInfo' => $pageInfo]);
-      $this->view($view, ['data' => $send, 'staff' => $staff, 'pageInfo' => $pageInfo]);
+      $this->view($view, ['data' => $send, 'staff' => $staff, 'tl' => $tl, 'om' => $om, 'pageInfo' => $pageInfo]);
    }
 
    public function insert()
@@ -64,8 +67,8 @@ class SP extends Controller
       $where2 = "employee_id = '" . $emp_id . "'";
       $emp = $this->model('M_DB_1')->get_where_row("master_staff", $where2);
 
-      $tl = $emp['tl'];
-      $om = $emp['om'];
+      $tl = $_POST['f5'];
+      $om = $_POST['f6'];
       $dvc = $emp['ticket_category'];
 
       $unic = $sp_date . $sp . $emp_id;
