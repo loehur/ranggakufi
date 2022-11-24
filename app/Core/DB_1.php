@@ -116,11 +116,7 @@ class DB_1 extends DB_Config
     {
         $query = "INSERT INTO $table VALUES ($values)";
         $run = $this->mysqli->query($query);
-        if ($run) {
-            return TRUE;
-        } else {
-            return array('query' => $query, 'info' => $this->mysqli->error);
-        }
+        return array('query' => $query, 'error' => $this->mysqli->error, 'errno' => $this->mysqli->errno);
     }
 
     public function insertCols($table, $columns, $values)

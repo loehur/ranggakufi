@@ -140,11 +140,11 @@ class Upload extends Controller
                   if ($data_main < 1) {
                      $vals =  "'" . $employee_id . "','" . $employee_name . "','" . $tl_id . "','" . $om_id . "','" . $dvc . "',DEFAULT,DEFAULT,DEFAULT";
                      $query = $this->model('M_DB_1')->insert('master_staff', $vals);
-                     if ($query == 1) {
+                     if ($query['errno'] == 0) {
                         $succCount++;
                      } else {
                         $failedCount++;
-                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        $list_failed = $list_failed . "[" . $employee_id . "] " . $query['error'];
                      }
                   } else {
                      $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "' AND tl = '" . $tl_id . "' AND om = '" . $om_id . "' AND ticket_category = '" . $dvc . "'";
@@ -206,11 +206,11 @@ class Upload extends Controller
                   if ($data_main < 1) {
                      $vals =  "'" . $employee_id . "','" . $employee_name . "','" . $om_id . "','" . $dvc . "',DEFAULT,DEFAULT,DEFAULT";
                      $query = $this->model('M_DB_1')->insert('master_tl', $vals);
-                     if ($query == 1) {
+                     if ($query['errno'] == 0) {
                         $succCount++;
                      } else {
                         $failedCount++;
-                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        $list_failed = $list_failed . "[" . $employee_id . "] " . $query['error'];
                      }
                   } else {
                      $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "' AND  om = '" . $om_id . "' AND ticket_category = '" . $dvc . "'";
@@ -271,11 +271,11 @@ class Upload extends Controller
                   if ($data_main < 1) {
                      $vals =  "'" . $employee_id . "','" . $employee_name . "','" . $dvc . "',DEFAULT,DEFAULT,DEFAULT";
                      $query = $this->model('M_DB_1')->insert('master_om', $vals);
-                     if ($query == 1) {
+                     if ($query['errno'] == 0) {
                         $succCount++;
                      } else {
                         $failedCount++;
-                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        $list_failed = $list_failed . "[" . $employee_id . "] " . $query['error'];
                      }
                   } else {
                      $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "' AND ticket_category = '" . $dvc . "'";
@@ -336,11 +336,11 @@ class Upload extends Controller
                   if ($data_main < 1) {
                      $vals =  "'" . $employee_id . "','" . $employee_name . "',DEFAULT,DEFAULT,DEFAULT";
                      $query = $this->model('M_DB_1')->insert('master_cs', $vals);
-                     if ($query == 1) {
+                     if ($query['errno'] == 0) {
                         $succCount++;
                      } else {
                         $failedCount++;
-                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        $list_failed = $list_failed . "[" . $employee_id . "] " . $query['error'];
                      }
                   } else {
                      $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "'";
@@ -400,11 +400,11 @@ class Upload extends Controller
                   if ($data_main < 1) {
                      $vals =  "'" . $employee_id . "','" . $employee_name . "',DEFAULT,DEFAULT,DEFAULT";
                      $query = $this->model('M_DB_1')->insert('master_qc', $vals);
-                     if ($query == 1) {
+                     if ($query['errno'] == 0) {
                         $succCount++;
                      } else {
                         $failedCount++;
-                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        $list_failed = $list_failed . "[" . $employee_id . "] " . $query['error'];
                      }
                   } else {
                      $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "'";
