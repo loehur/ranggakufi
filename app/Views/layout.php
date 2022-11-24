@@ -20,6 +20,7 @@ if (isset($data['pageInfo'])) {
   <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>plugins/adminLTE-3.1.0/css/adminlte.min.css">
   <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>plugins/select2/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>plugins/date-picker/bootstrap-datepicker.min.css" />
+  <link rel="stylesheet" href="<?= $this->ASSETS_URL ?>css/selectize.bootstrap3.min.css" rel="stylesheet" />
 
   <style>
     @font-face {
@@ -97,8 +98,7 @@ if (isset($data['pageInfo'])) {
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item ">
               <a href="<?= $this->BASE_URL ?>" class="nav-link 
-              <?php if ($title == 'Home') : echo 'active';
-              endif ?>">
+              <?= ($title == 'Home') ? 'active' : "" ?>">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   Home
@@ -106,87 +106,156 @@ if (isset($data['pageInfo'])) {
               </a>
             </li>
 
-            <li class="nav-item 
+            <?php
+            switch ($_SESSION['userTipe']) {
+              case "admin":
+              case "management":
+              case "cs":
+              case "staff":
+              case "tl":
+              case "om":
+            ?>
+                <li class="nav-item 
                 <?php if (strpos($title, 'CS Problem') !== FALSE) {
                   echo 'menu-is-opening menu-open';
                 } ?>">
-              <a href="#" class="nav-link 
+                  <a href="#" class="nav-link 
                 <?php if (strpos($title, 'CS Problem') !== FALSE) {
                   echo 'active';
                 } ?>">
-                <i class="nav-icon fas fa-exclamation-circle"></i>
-                <p>
-                  CS Problem
-                  <i class="fas fa-angle-left right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview" style="display: 
+                    <i class="nav-icon fas fa-exclamation-circle"></i>
+                    <p>
+                      CS Problem
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="display: 
                 <?php if (strpos($title, 'CS Problem') !== FALSE) {
                   echo 'block;';
                 } else {
                   echo 'none;';
                 } ?>">
-                <li class="nav-item">
-                  <a href="<?= $this->BASE_URL ?>CS_Problem/i/1" class="nav-link 
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>CS_Problem/i/1" class="nav-link 
                     <?php if ($title == 'Delay Process - CS Problem') {
                       echo 'active';
                     } ?>">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>
-                      Delay Process
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="<?= $this->BASE_URL ?>CS_Problem/i/2" class="nav-link 
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Delay Process
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>CS_Problem/i/2" class="nav-link 
                     <?php if ($title == 'Delay Solved - CS Problem') {
                       echo 'active';
                     } ?>">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>
-                      Delay Solved
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="<?= $this->BASE_URL ?>CS_Problem/i/3" class="nav-link 
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Delay Solved
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>CS_Problem/i/3" class="nav-link 
                     <?php if ($title == 'Delay Rejected - CS Problem') {
                       echo 'active';
                     } ?>">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>
-                      Delay Rejected
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="<?= $this->BASE_URL ?>CS_Problem/result" class="nav-link 
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Delay Rejected
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>CS_Problem/result" class="nav-link 
                     <?php if ($title == 'Delay Result - CS Problem') {
                       echo 'active';
                     } ?>">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>
-                      Delay Result
-                    </p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="<?= $this->BASE_URL ?>CS_Problem/check_main" class="nav-link 
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Delay Result
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>CS_Problem/check_main" class="nav-link 
                     <?php if ($title == 'Delay Checking - CS Problem') {
                       echo 'active';
                     } ?>">
-                    <i class="far fa-circle nav-icon"></i>
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Delay Checking
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+            <?php
+                break;
+            } ?>
+
+            <?php
+            switch ($_SESSION['userTipe']) {
+              case "admin":
+              case "management":
+              case "staff":
+              case "tl":
+              case "om":
+              case "qc":
+            ?>
+                <li class="nav-item 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'menu-is-opening menu-open';
+                } ?>">
+                  <a href="#" class="nav-link 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'active';
+                } ?>">
+                    <i class="nav-icon fas fa-envelope-open-text"></i>
                     <p>
-                      Delay Checking
+                      Surat Peringatan
+                      <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
+                  <ul class="nav nav-treeview" style="display: 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'block;';
+                } else {
+                  echo 'none;';
+                } ?>">
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>SP/i/1" class="nav-link 
+                    <?php if ($title == 'SP - Active') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Active
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>SP/i/2" class="nav-link 
+                    <?php if ($title == 'SP - Historical') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Historical
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
-              </ul>
-            </li>
+            <?php
+                break;
+            } ?>
 
             <li class="nav-item ">
               <a href="<?= $this->BASE_URL ?>WA_Check" class="nav-link 
-              <?php if ($title == 'WA Valid') : echo 'active';
+              <?php if ($title == 'WA Check') : echo 'active';
               endif ?>">
                 <i class="nav-icon fas fa-check-double"></i>
                 <p>
@@ -396,6 +465,17 @@ if (isset($data['pageInfo'])) {
                       <i class="far fa-circle nav-icon"></i>
                       <p>
                         Customer Service
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="<?= $this->BASE_URL ?>Raw_Data/i/qc" class="nav-link 
+                    <?php if ($title == 'Raw QC') {
+                      echo 'active';
+                    } ?>">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>
+                        Quality Control
                       </p>
                     </a>
                   </li>

@@ -51,6 +51,7 @@
                             <option value="om">Operation Manager</option>
                             <option value="management">Management</option>
                             <option value="cs">Customer Service</option>
+                            <option value="qc">Quality Control</option>
                             <option value="admin">Admin</option>
                         </select>
                         <div class="input-group-append">

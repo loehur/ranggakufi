@@ -136,12 +136,12 @@ function len($val)
 
                 <?php
                 $no = 0;
-				$countSum = count($data['summary']);
-				if($countSum > 2){  
-                $Gradient = Gradient("008000", "FFFF00", "FF0000", $countSum);
-				}else{
-					$Gradient = "FFFFFF";
-				}
+                $countSum = count($data['summary']);
+                if ($countSum > 2) {
+                  $Gradient = Gradient("008000", "FFFF00", "FF0000", $countSum);
+                } else {
+                  $Gradient = "FFFFFF";
+                }
                 foreach ($data['summary'] as $a) {
                   $no++;
 
@@ -218,12 +218,12 @@ function len($val)
   <div class="row">
     <?php $week = 0;
     foreach ($data['data'] as $key => $b) {
-		$countSum = count($b);
-		if($countSum > 2){  
+      $countSum = count($b);
+      if ($countSum > 2) {
         $Gradient = Gradient("008000", "FFFF00", "FF0000", $countSum);
-		}else{
-		$Gradient = "FFFFFF";
-		}
+      } else {
+        $Gradient = "FFFFFF";
+      }
       $week++;
     ?>
       <div class="col">

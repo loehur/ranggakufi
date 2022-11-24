@@ -118,11 +118,44 @@ class Login extends Controller
                echo "Autentication Failed!";
             }
             break;
-         case          'cs':
+         case 'cs':
             $where = "employee_id = '" . $_POST["HP"] . "' AND pass = '" . md5($_POST["PASS"]) . "'";
             $this->data_user = $this->model('M_DB_1')->get_where_row('master_cs', $where);
             if ($this->data_user) {
                $_SESSION['userTipe'] = 'cs';
+               $secret = $this->data_user['ga_secret'];
+               $this->model('M_DB_1')->query("SET GLOBAL time_zone = '+07:00'");
+               if ($this->data_user['ga'] == 1) {
+                  if (strlen($secret) > 0) {
+                     if (!isset($_POST['code'])) {
+                        echo '<div><label>Authenticator Code</label><input type="text" name="code" class="form-control" required></div>';
+                     } else {
+                        require_once "library/GoogleAuthenticator.php";
+                        $authenticator = new PHPGangsta_GoogleAuthenticator();
+                        $tolerance = 0;
+                        $code    = $_POST['code'];
+                        $result  = $authenticator->verifyCode($secret, $code, $tolerance);
+                        if ($result) {
+                           $this->login_success();
+                        } else {
+                           echo "PASS CODE Autentication Failed!";
+                        }
+                     }
+                  } else {
+                     echo 2;
+                  }
+               } else {
+                  $this->login_success();
+               }
+            } else {
+               echo "Autentication Failed!";
+            }
+            break;
+         case 'qc':
+            $where = "employee_id = '" . $_POST["HP"] . "' AND pass = '" . md5($_POST["PASS"]) . "'";
+            $this->data_user = $this->model('M_DB_1')->get_where_row('master_qc', $where);
+            if ($this->data_user) {
+               $_SESSION['userTipe'] = 'qc';
                $secret = $this->data_user['ga_secret'];
                $this->model('M_DB_1')->query("SET GLOBAL time_zone = '+07:00'");
                if ($this->data_user['ga'] == 1) {

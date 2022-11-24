@@ -376,6 +376,70 @@ class Upload extends Controller
       echo $msg;
    }
 
+   public function importQC()
+   {
+      $upStatus = "Error Function";
+      $succCount = 0;
+      $failedCount = 0;
+      $skipCount = 0;
+      $updateCount = 0;
+      $list_updated = "";
+      $list_skipped = "";
+      $list_failed = "";
+      $msg = $upStatus . " - [" . $succCount . "] OK, [" . $succCount . "] Failed.";
+      if ($_FILES["file"]["size"] > 0) {
+         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
+            fgetcsv($csvFile);
+            while (($line = fgetcsv($csvFile)) !== FALSE) {
+               $employee_id = $line[0];
+               if (strlen($employee_id) > 0) {
+                  $employee_name = $line[1];
+                  $where = "employee_id = '" . $employee_id . "'";
+                  $data_main = $this->model('M_DB_1')->count_where('master_qc', $where);
+                  if ($data_main < 1) {
+                     $vals =  "'" . $employee_id . "','" . $employee_name . "',DEFAULT,DEFAULT,DEFAULT";
+                     $query = $this->model('M_DB_1')->insert('master_qc', $vals);
+                     if ($query == 1) {
+                        $succCount++;
+                     } else {
+                        $failedCount++;
+                        $list_failed = $list_failed . "[" . $employee_id . "] ";
+                     }
+                  } else {
+                     $where2 = "employee_id = '" . $employee_id . "' AND employee_name = '" . $employee_name . "'";
+                     $data_main2 = $this->model('M_DB_1')->count_where('master_qc', $where2);
+                     if ($data_main2 < 1) {
+                        $query2 = $this->model('M_DB_1')->update("master_qc", "employee_name = '" . $employee_name . "'", $where);
+                        if ($query2 == 1) {
+                           $updateCount++;
+                           $list_updated = $list_updated . "[" . $employee_id . "] ";
+                        } else {
+                           $failedCount++;
+                           $list_failed = $list_failed . "[" . $employee_id . "] ";
+                        }
+                     } else {
+                        $skipCount++;
+                        $list_skipped = $list_skipped . "[" . $employee_id . "] ";
+                     }
+                  }
+               }
+            }
+            fclose($csvFile);
+            $upStatus = 'Import Complete!<hr>';
+         } else {
+            $upStatus = 'Error Data Row!';
+         }
+      } else {
+         $upStatus = 'Invalid File!';
+      }
+      $msg = $upStatus . "[" . $succCount . "] Success,<hr> 
+      [" . $updateCount . "] Updated,<br>" . $list_updated . "<hr>
+      [" . $skipCount . "] Skipped,<br>" . $list_skipped . "<hr>
+      [" . $failedCount . "] Failed.<br>" . $list_failed;
+      echo $msg;
+   }
+
    public function exportCSV($tb)
    {
       if ($_SESSION['userTipe'] == "admin" || $_SESSION['userTipe'] == "cs") {

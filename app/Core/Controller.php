@@ -13,7 +13,7 @@ class Controller extends URL
                 if ($_SESSION['userTipe'] == 'admin' || $_SESSION['userTipe'] == 'management') {
                     $this->admin = $_SESSION['user']['admin'];
                     $this->privilege = $_SESSION['user']['privilege'];
-                } elseif ($_SESSION['userTipe'] == 'cs') {
+                } elseif ($_SESSION['userTipe'] == 'cs' || $_SESSION['userTipe'] == 'qc') {
                     $this->admin = 0;
                     $this->privilege = 0;
                 } elseif ($_SESSION['userTipe'] == 'staff' || $_SESSION['userTipe'] == 'tl' || $_SESSION['userTipe'] == 'om') {
@@ -50,7 +50,7 @@ class Controller extends URL
                 'admin' => $this->data_user['admin'],
                 'privilege' => $this->data_user['privilege'],
             );
-        } elseif ($_SESSION['userTipe'] == 'cs') {
+        } elseif ($_SESSION['userTipe'] == 'cs' || ($_SESSION['userTipe'] == 'qc')) {
             $_SESSION['user'] = array(
                 'nama' => $this->data_user['employee_name'],
                 'id' => $this->data_user['employee_id'],

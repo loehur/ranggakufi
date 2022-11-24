@@ -14,7 +14,7 @@
 <div class="content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-auto">
+      <div class="col-md-6">
         <div class="card">
           <div class="card-header bg-info">
             <b>Hourly</b> (.csv File Import)
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-6">
         <div class="card">
           <div class="card-header bg-primary">
             <b>Daily</b> (.csv File Import)
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-2">
         <div class="card">
           <div class="card-header bg-warning">
             <b>STAFF</b> (.csv File Import)
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-2">
         <div class="card">
           <div class="card-header bg-warning">
             <b>Team Leader</b> (.csv File Import)
@@ -86,7 +86,7 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-2">
         <div class="card">
           <div class="card-header bg-warning">
             <b>Operation Manager</b> (.csv File Import)
@@ -104,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-2">
         <div class="card">
           <div class="card-header bg-success">
             <b>CS</b> (.csv File Import)
@@ -122,7 +122,25 @@
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-header bg-success">
+            <b>QC</b> (.csv File Import)
+          </div>
+          <div class="card-body p-2">
+            <form action="<?= $this->BASE_URL; ?>Upload/importQC" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Format : ID | Name</label>
+                <input type="file" class="form-control-file" name="file" required>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-sm btn-success">Import QC</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header bg-light">
             <span id="spinnerUpload" role="status" aria-hidden="true"></span>

@@ -69,6 +69,13 @@ class Raw_Data extends Controller
             $data = $this->model('M_DB_1')->get_order($tb, $order);
             $view = 'data/data_employee';
             break;
+         case "qc":
+            $pageInfo = ['title' => 'Raw QC'];
+            $tb = "master_qc";
+            $order = "employee_name ASC";
+            $data = $this->model('M_DB_1')->get_order($tb, $order);
+            $view = 'data/data_employee';
+            break;
       }
 
       if (strlen($view) > 0) {

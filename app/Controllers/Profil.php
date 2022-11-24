@@ -26,6 +26,12 @@ class Profil extends Controller
             $data_user = $this->model('M_DB_1')->get_where_row($table, $where);
             $data['ga'] = $data_user['ga'];
             break;
+         case "qc":
+            $table = "master_qc";
+            $where = "employee_id = '" . $this->id_user . "'";
+            $data_user = $this->model('M_DB_1')->get_where_row($table, $where);
+            $data['ga'] = $data_user['ga'];
+            break;
          case "tl":
             $table = "master_tl";
             $where = "employee_id = '" . $this->id_user . "'";
