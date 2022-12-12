@@ -249,6 +249,50 @@ if (isset($data['pageInfo'])) {
                     </li>
                   </ul>
                 </li>
+                <li class="nav-item 
+                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                  echo 'menu-is-opening menu-open';
+                } ?>">
+                  <a href="#" class="nav-link 
+                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                  echo 'active';
+                } ?>">
+                    <i class="nav-icon fas fa-pray"></i>
+                    <p>
+                      Relief
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="display: 
+                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                  echo 'block;';
+                } else {
+                  echo 'none;';
+                } ?>">
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>Relief" class="nav-link 
+                    <?php if ($title == 'Relief - On Going') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          On going
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>Relief" class="nav-link 
+                    <?php if ($title == 'Relief - Done') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Done
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
             <?php
                 break;
             } ?>

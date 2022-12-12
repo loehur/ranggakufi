@@ -46,6 +46,7 @@ class SP extends Controller
       foreach ($data as $a) {
          $send[$a['emp_id']][$a['id_sp']] = $a;
       }
+
       $staff = $this->model('M_DB_1')->get("master_staff");
       $tl = $this->model('M_DB_1')->get("master_tl");
       $om = $this->model('M_DB_1')->get("master_om");
