@@ -40,20 +40,75 @@
                         }
                       }
 
+                      foreach ($this->dOM as $do) {
+                        if ($do['employee_id'] == $om_name) {
+                          $om_name = $do['employee_name'];
+                        }
+                      }
+
+                      foreach ($this->dTL as $dt) {
+                        if ($dt['employee_id'] == $tl_name) {
+                          $tl_name = $dt['employee_name'];
+                        }
+                      }
+
                       echo "<tr class='table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
-                      echo "<td colspan='7' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1'><b>#" . $loan_id . "</b></span></h7>";
+                      echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1'><b>#" . $loan_id . "</b></span></h7>";
                       echo "</tr>";
                       echo "<tr class='table-borderless " . $id . "'>";
-                      echo "<td class='text-right' ><small>Relief ID:</small><br>#" . $id . "</td>";
-                      echo "<td><small>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
+                      echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
                       echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small></td>";
-                      echo "<td><small>Date</small><br>" . $a['date_'] . "</td>";
-                      echo "<td><small>Request Date</small><br>" . $a['request_date'] . "</td>";
+                      echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
                       echo "<td class='text-right'><small>Amount</small><br>" . number_format($a['repay_amount']) . "</td>";
+                      echo "<td class='text-right'><small>Waiver Amount</small><br>" . number_format($a['waiver_amount']) . "</td>";
                       echo "<td><small>Remark</small><br><span style='color:#DC7633'><b>" . $a['remark'] . "</b></span></td>";
                       echo "</td>";
-                      echo "<td><small>OM Check</small><br><a href='#'><span class='mr-1 btn badge badge-success'>Approve</span></a><span class='btn badge badge-danger'>Reject</span></a></td>";
-                      echo "<td><small>Admin Check</small><br><a href='#'><span class='mr-1 btn badge badge-success'>Approve</span></a><span class='btn badge badge-danger'>Reject</span></a></td>";
+
+                      if ($_SESSION['userTipe'] == "om") {
+                        if (strpos($this->userDVC, $a['bucket']) !== FALSE) {
+                          if ($a['om_check'] == 0) {
+                            echo "<td><small>OM Check</small><br><a href='" . $this->BASE_URL . "Relief/update/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
+                            echo "<td><small>Admin Check</small><br>OM Checking</td>";
+                          } else {
+                            $st_icon = "";
+                            if ($a['om_check'] == 1) {
+                              $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                            } else {
+                              $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                            }
+                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                            echo "<td><small>Admin Check</small><br>Checking...</td>";
+                          }
+                        } else {
+                          if ($a['om_check'] == 0) {
+                            echo "<td><small>OM Check</small><br>Checking...</td>";
+                            echo "<td><small>Admin Check</small><br>Checking...</td>";
+                          } else {
+                            $st_icon = "";
+                            if ($a['om_check'] == 1) {
+                              $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                            } else {
+                              $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                            }
+                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                            echo "<td><small>Admin Check</small><br>Checking...</td>";
+                          }
+                        }
+                      } else {
+                        if ($a['om_check'] == 0) {
+                          echo "<td><small>OM Check</small><br>Checking...</td>";
+                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+                        } else {
+                          $st_icon = "";
+                          if ($a['om_check'] == 1) {
+                            $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                          } else {
+                            $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                          }
+                          echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+                        }
+                      }
                       echo "</tr>";
                       $row++;
                     }
@@ -128,7 +183,7 @@
                   <select name="tl" class="tize form-control form-control-sm p-0 m-0" required>
                     <option value="" selected disabled>...</option>
                     <?php foreach ($this->dTL as $a) { ?>
-                      <option value="<?= $a['employee_name'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
+                      <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -141,7 +196,7 @@
                   <select name="om" class="tize form-control form-control-sm p-0 m-0" required>
                     <option value="" selected disabled>...</option>
                     <?php foreach ($this->dOM as $a) { ?>
-                      <option value="<?= $a['employee_name'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
+                      <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
                     <?php } ?>
                   </select>
                 </div>
@@ -149,6 +204,10 @@
             </div>
             <div class="form-group">
               <div class="row">
+                <div class="col">
+                  <label for="exampleInputEmail1">Waiver Amount</label>
+                  <input type="number" name="waiver" class="form-control" placeholder="Waiver Amount" required>
+                </div>
                 <div class="col">
                   <label for="exampleInputEmail1">Remark</label>
                   <input type="text" name="remark" class="form-control" placeholder="Remark" required>
@@ -186,5 +245,22 @@
 
   $("#dp1").datepicker({
     format: 'yyyy-mm-dd',
+  });
+
+  $("form").on("submit", function(e) {
+    e.preventDefault();
+    $('span#spinner').addClass('spinner-border spinner-border-sm');
+    $.ajax({
+      url: $(this).attr('action'),
+      data: $(this).serialize(),
+      type: $(this).attr("method"),
+      success: function(res) {
+        if (res == 1) {
+          location.reload(true);
+        } else {
+          alert(res);
+        }
+      },
+    });
   });
 </script>
