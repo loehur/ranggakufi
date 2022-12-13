@@ -14,9 +14,9 @@ class Relief extends Controller
       $view = 'relief/relief_main';
       $data = array();
 
-      $pageInfo = ['title' => 'Relief'];
+      $pageInfo = ['title' => 'Relief - On Going'];
 
-      $where = "id_relief > 0";
+      $where = "id_relief > 0 order by id_relief DESC";
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
       $this->view($view, ['data' => $data, 'pageInfo' => $pageInfo]);
@@ -25,6 +25,7 @@ class Relief extends Controller
    public function insert()
    {
       if ($_SESSION['userTipe'] != "staff") {
+         echo "Account Forbidden";
          exit();
       }
 
@@ -38,9 +39,15 @@ class Relief extends Controller
       $om = $_POST['om'];
       $remark = $_POST['remark'];
       $waiver = $_POST['waiver'];
+      $total_el = $_POST['4element'];
 
-      $cols = 'unic, emp_id, date_, loan_id, bucket, om, tl, remark, repay_amount, dpd, waiver_amount';
-      $vals = "'" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver;
+      if (strlen($emp_id) == 0) {
+         echo "Employee ID Forbidden";
+         exit();
+      }
+
+      $cols = 'unic, emp_id, date_, loan_id, bucket, om, tl, remark, repay_amount, dpd, waiver_amount, 4_el';
+      $vals = "'" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver . "," . $total_el;
       $query = $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
       if ($query['errno'] == 0) {
          echo "1";
@@ -52,6 +59,18 @@ class Relief extends Controller
    public function update($id, $st)
    {
       $set = "om_date ='" . date('Y-m-d') . "', om_check =" . $st . ", om_approved = '" . $this->id_user . "'";
+      $where = "id_relief = '" . $id . "'";
+      $update = $this->model('M_DB_1')->update($this->table, $set, $where);
+      if ($update['errno'] == 0) {
+         $this->index();
+      } else {
+         print_r($update['error']);
+      }
+   }
+
+   public function update_admin($id, $st)
+   {
+      $set = "data_date ='" . date('Y-m-d') . "', data_check =" . $st . ", data_approved = '" . $this->id_user . "'";
       $where = "id_relief = '" . $id . "'";
       $update = $this->model('M_DB_1')->update($this->table, $set, $where);
       if ($update['errno'] == 0) {

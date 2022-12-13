@@ -31,6 +31,7 @@ class Controller extends URL
                 $this->dHour = $_SESSION['data']['hour'];
                 $this->dDvs = $_SESSION['data']['divisi'];
                 $this->dEmp = $_SESSION['data']['emp'];
+                $this->dUser = $_SESSION['data']['user'];
 
                 $this->dStaff = $_SESSION['data']['staff'];
                 $this->dTL = $_SESSION['data']['tl'];
@@ -92,6 +93,7 @@ class Controller extends URL
         $_SESSION['data'] = array(
             'privilege' => $this->model('M_DB_1')->get('privilege'),
             'divisi' => $this->model('M_DB_1')->get('ticket_category'),
+            'user' => $this->model('M_DB_1')->get_order('user', 'nama_user ASC'),
             'emp' => $this->model('M_DB_1')->get_order('master_tlom', 'employee_name ASC'),
             'staff' => $this->model('M_DB_1')->get_order('master_staff', 'employee_name ASC'),
             'tl' => $this->model('M_DB_1')->get_order('master_tl', 'employee_name ASC'),

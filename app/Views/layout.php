@@ -250,11 +250,11 @@ if (isset($data['pageInfo'])) {
                   </ul>
                 </li>
                 <li class="nav-item 
-                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                <?php if (strpos($title, 'Relief') !== FALSE) {
                   echo 'menu-is-opening menu-open';
                 } ?>">
                   <a href="#" class="nav-link 
-                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                <?php if (strpos($title, 'Relief') !== FALSE) {
                   echo 'active';
                 } ?>">
                     <i class="nav-icon fas fa-pray"></i>
@@ -264,7 +264,7 @@ if (isset($data['pageInfo'])) {
                     </p>
                   </a>
                   <ul class="nav nav-treeview" style="display: 
-                <?php if (strpos($title, 'Relief ') !== FALSE) {
+                <?php if (strpos($title, 'Relief') !== FALSE) {
                   echo 'block;';
                 } else {
                   echo 'none;';

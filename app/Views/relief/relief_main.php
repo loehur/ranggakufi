@@ -59,10 +59,14 @@
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
                       echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small></td>";
                       echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
+                      echo "<td class='text-right'><small>Total 4 Elements</small><br>" . number_format($a['4_el']) . "</td>";
                       echo "<td class='text-right'><small>Amount</small><br>" . number_format($a['repay_amount']) . "</td>";
                       echo "<td class='text-right'><small>Waiver Amount</small><br>" . number_format($a['waiver_amount']) . "</td>";
                       echo "<td><small>Remark</small><br><span style='color:#DC7633'><b>" . $a['remark'] . "</b></span></td>";
                       echo "</td>";
+
+                      $om_ap = $a['om_approved'];
+                      $data_ap = $a['data_approved'];
 
                       if ($_SESSION['userTipe'] == "om") {
                         if (strpos($this->userDVC, $a['bucket']) !== FALSE) {
@@ -70,13 +74,20 @@
                             echo "<td><small>OM Check</small><br><a href='" . $this->BASE_URL . "Relief/update/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
                             echo "<td><small>Admin Check</small><br>OM Checking</td>";
                           } else {
+
+                            foreach ($this->dOM as $do) {
+                              if ($do['employee_id'] == $om_ap) {
+                                $om_ap = $do['employee_name'];
+                              }
+                            }
+
                             $st_icon = "";
                             if ($a['om_check'] == 1) {
                               $st_icon = '<i class="fas fa-check-circle text-success"></i>';
                             } else {
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
-                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
                             echo "<td><small>Admin Check</small><br>Checking...</td>";
                           }
                         } else {
@@ -84,14 +95,58 @@
                             echo "<td><small>OM Check</small><br>Checking...</td>";
                             echo "<td><small>Admin Check</small><br>Checking...</td>";
                           } else {
+                            foreach ($this->dOM as $do) {
+                              if ($do['employee_id'] == $om_ap) {
+                                $om_ap = $do['employee_name'];
+                              }
+                            }
                             $st_icon = "";
                             if ($a['om_check'] == 1) {
                               $st_icon = '<i class="fas fa-check-circle text-success"></i>';
                             } else {
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
-                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                            echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
                             echo "<td><small>Admin Check</small><br>Checking...</td>";
+                          }
+                        }
+                      } elseif ($_SESSION['userTipe'] == "admin") {
+                        if ($a['om_check'] == 0) {
+                          echo "<td><small>OM Check</small><br>Checking...</td>";
+                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+                        } else {
+                          foreach ($this->dOM as $do) {
+                            if ($do['employee_id'] == $om_ap) {
+                              $om_ap = $do['employee_name'];
+                            }
+                          }
+                          $st_icon = "";
+                          if ($a['om_check'] == 1) {
+                            $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                          } else {
+                            $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                          }
+                          echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
+
+                          if ($a['om_check'] == 2) {
+                            echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
+                          } else {
+                            if ($a['data_check'] == 0) {
+                              echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
+                            } else {
+                              foreach ($this->dUser as $du) {
+                                if ($du['id_user'] == $data_ap) {
+                                  $data_ap = $du['nama_user'];
+                                }
+                              }
+                              $st_icon = "";
+                              if ($a['data_check'] == 1) {
+                                $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                              } else {
+                                $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                              }
+                              echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
+                            }
                           }
                         }
                       } else {
@@ -99,13 +154,18 @@
                           echo "<td><small>OM Check</small><br>Checking...</td>";
                           echo "<td><small>Admin Check</small><br>Checking...</td>";
                         } else {
+                          foreach ($this->dOM as $do) {
+                            if ($do['employee_id'] == $om_ap) {
+                              $om_ap = $do['employee_name'];
+                            }
+                          }
                           $st_icon = "";
                           if ($a['om_check'] == 1) {
                             $st_icon = '<i class="fas fa-check-circle text-success"></i>';
                           } else {
                             $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                           }
-                          echo "<td><small>OM Check</small><br>" . $st_icon . " " . $a['om_approved'] . "</small></td>";
+                          echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
                           echo "<td><small>Admin Check</small><br>Checking...</td>";
                         }
                       }
@@ -249,7 +309,6 @@
 
   $("form").on("submit", function(e) {
     e.preventDefault();
-    $('span#spinner').addClass('spinner-border spinner-border-sm');
     $.ajax({
       url: $(this).attr('action'),
       data: $(this).serialize(),
