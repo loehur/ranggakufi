@@ -16,7 +16,14 @@ class Relief extends Controller
 
       $pageInfo = ['title' => 'Relief - On Going'];
 
-      $where = "id_relief > 0 order by id_relief DESC";
+      if ($_SESSION['userTipe'] == "admin") {
+         $where = "id_relief > 0 order by id_relief DESC";
+      } elseif ($_SESSION['userTipe'] == "staff") {
+         $where = "id_relief > 0 AND emp_id = '" . $this->id_user . "' order by id_relief DESC";
+      } else {
+         $where = "id_relief > 0 AND bucket LIKE '%" . $this->userDVC . "%' order by id_relief DESC";
+      }
+
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
       $this->view($view, ['data' => $data, 'pageInfo' => $pageInfo]);

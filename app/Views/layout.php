@@ -90,7 +90,7 @@ if (isset($data['pageInfo'])) {
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="info">
             <span class="btn btn-sm btn-secondary"><?= $this->nama_user . "<br><small>" . strtoupper($_SESSION['userTipe']) . "#" . $this->id_user . "#" . $this->admin . "-" . $this->privilege . "</small>"
-                                                    ?></span>
+                                                    ?><br><?= $this->userDVC ?></span>
           </div>
         </div>
 
