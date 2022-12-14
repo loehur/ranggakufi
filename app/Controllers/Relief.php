@@ -75,6 +75,11 @@ class Relief extends Controller
 
    public function update($id, $st)
    {
+      if (!isset($this->id_user) || strlen($this->id_user) == 0) {
+         $this->index();
+         exit();
+      }
+
       $set = "om_date ='" . date('Y-m-d') . "', om_check =" . $st . ", om_approved = '" . $this->id_user . "'";
       $where = "id_relief = '" . $id . "'";
       $update = $this->model('M_DB_1')->update($this->table, $set, $where);
@@ -87,6 +92,11 @@ class Relief extends Controller
 
    public function update_admin($id, $st)
    {
+      if (!isset($this->id_user) || strlen($this->id_user) == 0) {
+         $this->index();
+         exit();
+      }
+
       $set = "data_date ='" . date('Y-m-d') . "', data_check =" . $st . ", data_approved = '" . $this->id_user . "'";
       $where = "id_relief = '" . $id . "'";
       $update = $this->model('M_DB_1')->update($this->table, $set, $where);

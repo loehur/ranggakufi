@@ -256,6 +256,7 @@ class Login extends Controller
    public function login_success()
    {
       $_SESSION['login_user'] = TRUE;
+      $_SESSION['data_user'] = $this->data_user;
       $this->parameter();
       echo 1;
    }

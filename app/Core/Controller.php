@@ -6,6 +6,14 @@ class Controller extends URL
 {
     public $data_user;
 
+    public function __construct()
+    {
+        if (isset($_SESSION['data_user'])) {
+            $this->data_user = $_SESSION['data_user'];
+            $this->parameter();
+        }
+    }
+
     public function data()
     {
         if (isset($_SESSION['login_user'])) {
@@ -13,6 +21,7 @@ class Controller extends URL
                 if ($_SESSION['userTipe'] == 'admin' || $_SESSION['userTipe'] == 'management') {
                     $this->admin = $_SESSION['user']['admin'];
                     $this->privilege = $_SESSION['user']['privilege'];
+                    $this->userDVC = "ADMIN";
                 } elseif ($_SESSION['userTipe'] == 'cs' || $_SESSION['userTipe'] == 'qc') {
                     $this->admin = 0;
                     $this->privilege = 0;
