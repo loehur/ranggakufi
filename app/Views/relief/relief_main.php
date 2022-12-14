@@ -112,27 +112,7 @@
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
                             echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
-
-                            if ($a['om_check'] == 2) {
-                              echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
-                            } else {
-                              if ($a['data_check'] == 0) {
-                                echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
-                              } else {
-                                foreach ($this->dUser as $du) {
-                                  if ($du['id_user'] == $data_ap) {
-                                    $data_ap = $du['nama_user'];
-                                  }
-                                }
-                                $st_icon = "";
-                                if ($a['data_check'] == 1) {
-                                  $st_icon = '<i class="fas fa-check-circle text-success"></i>';
-                                } else {
-                                  $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
-                                }
-                                echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
-                              }
-                            }
+                            echo "<td><small>Admin Check</small><br>Checking...</td>";
                           }
                         }
                       } elseif ($_SESSION['userTipe'] == "admin") {
@@ -192,26 +172,7 @@
                           }
                           echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
 
-                          if ($a['om_check'] == 2) {
-                            echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
-                          } else {
-                            if ($a['data_check'] == 0) {
-                              echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
-                            } else {
-                              foreach ($this->dUser as $du) {
-                                if ($du['id_user'] == $data_ap) {
-                                  $data_ap = $du['nama_user'];
-                                }
-                              }
-                              $st_icon = "";
-                              if ($a['data_check'] == 1) {
-                                $st_icon = '<i class="fas fa-check-circle text-success"></i>';
-                              } else {
-                                $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
-                              }
-                              echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
-                            }
-                          }
+                          echo "<td><small>Admin Check</small><br>Checking...</td>";
                         }
                       }
                       echo "</tr>";
