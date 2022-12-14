@@ -21,7 +21,7 @@ class Relief extends Controller
       } elseif ($_SESSION['userTipe'] == "staff") {
          $where = "id_relief > 0 AND emp_id = '" . $this->id_user . "' order by id_relief DESC";
       } else {
-         $where = "id_relief > 0 AND bucket LIKE '%" . $this->userDVC . "%' order by id_relief DESC";
+         $where = "id_relief > 0 AND INSTR(bucket, '" . $this->userDVC . "') order by id_relief DESC";
       }
 
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
