@@ -71,7 +71,7 @@ if (isset($data['pageInfo'])) {
         <li class="nav-item">
           <a class="nav-link refresh" href="#">
             <span id="spinner" role="status" aria-hidden="true"></span>
-            Synchrone
+            Refresh
           </a>
         </li>
       </ul>
@@ -631,16 +631,7 @@ if (isset($data['pageInfo'])) {
       <script src="<?= $this->ASSETS_URL ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
       <script>
-        $(document).ready(function() {
-          $("a.refresh").on('click', function() {
-            $.ajax('<?= $this->BASE_URL ?>User/synchrone', {
-              beforeSend: function() {
-                $('span#spinner').addClass('spinner-border spinner-border-sm');
-              },
-              success: function(data, status, xhr) {
-                location.reload(true);
-              }
-            });
-          });
+        $("a.refresh").on('click', function() {
+          location.reload(true);
         });
       </script>

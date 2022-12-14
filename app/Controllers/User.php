@@ -27,7 +27,6 @@ class User extends Controller
       $privilege = $_POST['f3'];
       $vals = "'" . $nama . "','" . $hp . "','" . $privilege . "'";
       $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
-      $this->dataSynchrone();
    }
 
    public function updateCell()
@@ -54,11 +53,5 @@ class User extends Controller
       $where = "id_user = " . $id;
       $set = $col . " = '" . $value . "'";
       $this->model('M_DB_1')->update($this->table, $set, $where);
-      $this->dataSynchrone();
-   }
-
-   public function synchrone()
-   {
-      $this->dataSynchrone();
    }
 }

@@ -102,27 +102,6 @@ class Controller extends URL
             'hour' => $this->model('M_DB_1')->get_order('hour_list', 'hour_id ASC'),
         );
     }
-    public function parameter_unset()
-    {
-        unset($_SESSION['user']);
-        unset($_SESSION['data']);
-    }
-
-    public function dataSynchrone()
-    {
-        if ($_SESSION['userTipe'] == 'admin') {
-            $where = "id_user = " . $this->id_user;
-            $this->data_user = $this->model('M_DB_1')->get_where_row('user', $where);
-        } elseif ($this->data_user['tipe'] == 'cs') {
-            $where = "employee_id = " . $this->id_user;
-            $this->data_user = $this->model('M_DB_1')->get_where_row('master_cs', $where);
-        } elseif ($this->data_user['tipe'] == 'staff') {
-            $where = "employee_id = " . $this->id_user;
-            $this->data_user = $this->model('M_DB_1')->get_where_row('master_staff', $where);
-        }
-        $this->parameter_unset();
-        $this->parameter();
-    }
 
     public function session_cek()
     {

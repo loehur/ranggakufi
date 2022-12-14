@@ -53,7 +53,7 @@
                       }
 
                       echo "<tr class='table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
-                      echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1'><b>#" . $loan_id . "</b></span></h7>";
+                      echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1' style='cursor:pointer' id='" . $id . "' data-loan='" . $loan_id . "' onclick='copyText(" . $id . ")'><b>#" . $loan_id . "</b></span></h7>";
 
                       if ($a['om_check'] <> 1 && $this->id_user == $emp_id) {
                         echo "<a href='" . $this->BASE_URL . "Relief/cancel/" . $a['id_relief'] . "/" . $emp_id . "'><span class='ml-2 btn badge badge-danger'>Cancel</span></a>";
@@ -112,7 +112,27 @@
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
                             echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
-                            echo "<td><small>Admin Check</small><br>Checking...</td>";
+
+                            if ($a['om_check'] == 2) {
+                              echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
+                            } else {
+                              if ($a['data_check'] == 0) {
+                                echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
+                              } else {
+                                foreach ($this->dUser as $du) {
+                                  if ($du['id_user'] == $data_ap) {
+                                    $data_ap = $du['nama_user'];
+                                  }
+                                }
+                                $st_icon = "";
+                                if ($a['data_check'] == 1) {
+                                  $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                                } else {
+                                  $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                                }
+                                echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
+                              }
+                            }
                           }
                         }
                       } elseif ($_SESSION['userTipe'] == "admin") {
@@ -171,7 +191,27 @@
                             $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                           }
                           echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
-                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+
+                          if ($a['om_check'] == 2) {
+                            echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
+                          } else {
+                            if ($a['data_check'] == 0) {
+                              echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
+                            } else {
+                              foreach ($this->dUser as $du) {
+                                if ($du['id_user'] == $data_ap) {
+                                  $data_ap = $du['nama_user'];
+                                }
+                              }
+                              $st_icon = "";
+                              if ($a['data_check'] == 1) {
+                                $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                              } else {
+                                $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                              }
+                              echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
+                            }
+                          }
                         }
                       }
                       echo "</tr>";
@@ -327,4 +367,18 @@
       },
     });
   });
+
+  function copyText(id) {
+    var defaulHtml = $("span#" + id).html();
+    var copyText = $("span#" + id).attr('data-loan');
+    navigator.clipboard.writeText(copyText);
+    $("span#" + id).html($("span#" + id).html() + " - Copied");
+    setTimeout(function() {
+      reset_copy(id, defaulHtml)
+    }, 5000);
+  }
+
+  function reset_copy(id, defaulHtml) {
+    $("span#" + id).html(defaulHtml);
+  }
 </script>
