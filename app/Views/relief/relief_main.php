@@ -93,7 +93,6 @@
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
                             echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
-                            echo "<td><small>Admin Check</small><br>Checking...</td>";
                           }
                         } else {
                           if ($a['om_check'] == 0) {
@@ -112,8 +111,23 @@
                               $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
                             }
                             echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
-                            echo "<td><small>Admin Check</small><br>Checking...</td>";
                           }
+                        }
+                        if ($a['data_check'] == 0) {
+                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+                        } else {
+                          foreach ($this->dUser as $du) {
+                            if ($du['id_user'] == $data_ap) {
+                              $data_ap = $du['nama_user'];
+                            }
+                          }
+                          $st_icon = "";
+                          if ($a['data_check'] == 1) {
+                            $st_icon = '<i class="fas fa-check-circle text-success"></i>';
+                          } else {
+                            $st_icon = '<i class="fas fa-times-circle text-danger"></i>';
+                          }
+                          echo "<td><small>Admin Check</small><br>" . $st_icon . " " . strtoupper($data_ap) . "</small></td>";
                         }
                       } elseif ($_SESSION['userTipe'] == "admin") {
                         if ($a['om_check'] == 0) {
