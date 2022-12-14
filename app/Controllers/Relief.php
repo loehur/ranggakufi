@@ -43,6 +43,14 @@ class Relief extends Controller
 
       $percen = ($waiver / $total_el) * 100;
 
+      if ($percen >= 0 && $percen <= 30) {
+         $percen = 30;
+      } elseif ($percen > 30 && $percen <= 50) {
+         $percen = 50;
+      } else {
+         $percen = 100;
+      }
+
       if (strlen($emp_id) == 0) {
          echo "Employee ID Forbidden";
          exit();
