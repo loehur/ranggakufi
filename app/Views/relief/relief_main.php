@@ -54,6 +54,12 @@
 
                       echo "<tr class='table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
                       echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1'><b>#" . $loan_id . "</b></span></h7>";
+
+                      if ($a['om_check'] <> 1 && $this->id_user == $emp_id) {
+                        echo "<a href='" . $this->BASE_URL . "Relief/cancel/" . $a['id_relief'] . "/" . $emp_id . "'><span class='ml-2 btn badge badge-danger'>Cancel</span></a>";
+                      }
+
+                      echo "<span class='float-right' style='color:#DC7633'><b>" . $a['remark'] . "</b></span>";
                       echo "</tr>";
                       echo "<tr class='table-borderless " . $id . "'>";
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
@@ -61,8 +67,7 @@
                       echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
                       echo "<td class='text-right'><small>Total 4 Elements</small><br>" . number_format($a['4_el']) . "</td>";
                       echo "<td class='text-right'><small>Amount</small><br>" . number_format($a['repay_amount']) . "</td>";
-                      echo "<td class='text-right'><small>Waiver Amount</small><br>" . number_format($a['waiver_amount']) . "</td>";
-                      echo "<td><small>Remark</small><br><span style='color:#DC7633'><b>" . $a['remark'] . "</b></span></td>";
+                      echo "<td class='text-right'><small>Waiver/Percen</small><br>" . number_format($a['waiver_amount']) . "<br>" . number_format($a['percentage']) . "%</td>";
                       echo "</td>";
 
                       $om_ap = $a['om_approved'];

@@ -41,13 +41,15 @@ class Relief extends Controller
       $waiver = $_POST['waiver'];
       $total_el = $_POST['4element'];
 
+      $percen = ($waiver / $total_el) * 100;
+
       if (strlen($emp_id) == 0) {
          echo "Employee ID Forbidden";
          exit();
       }
 
-      $cols = 'unic, emp_id, date_, loan_id, bucket, om, tl, remark, repay_amount, dpd, waiver_amount, 4_el';
-      $vals = "'" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver . "," . $total_el;
+      $cols = 'unic, emp_id, date_, loan_id, bucket, om, tl, remark, repay_amount, dpd, waiver_amount, 4_el, percentage';
+      $vals = "'" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver . "," . $total_el . "," . $percen;
       $query = $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
       if ($query['errno'] == 0) {
          echo "1";
@@ -77,6 +79,22 @@ class Relief extends Controller
          $this->index();
       } else {
          print_r($update['error']);
+      }
+   }
+
+   public function cancel($id, $emp_id)
+   {
+      if ($this->id_user <> $emp_id) {
+         $this->index();
+         exit();
+      }
+
+      $where = "id_relief = '" . $id . "'";
+      $delete = $this->model('M_DB_1')->delete_where($this->table, $where);
+      if ($delete['errno'] == 0) {
+         $this->index();
+      } else {
+         print_r($delete['error']);
       }
    }
 }
