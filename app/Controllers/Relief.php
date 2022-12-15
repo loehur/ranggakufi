@@ -9,21 +9,26 @@ class Relief extends Controller
       $this->table = 'relief';
    }
 
-   public function index()
+   public function index($mode = 1)
    {
       $view = 'relief/relief_main';
       $data = array();
 
-      $pageInfo = ['title' => 'Relief - On Going'];
-
-      if ($_SESSION['userTipe'] == "admin") {
-         $where = "id_relief > 0 order by id_relief DESC";
-      } elseif ($_SESSION['userTipe'] == "staff") {
-         $where = "id_relief > 0 AND emp_id = '" . $this->id_user . "' order by id_relief DESC";
+      if ($mode == 2) {
+         $pageInfo = ['title' => 'Relief - Done'];
+         $whereMode = "om_check = 2 OR data_check <> 0 AND";
       } else {
-         $where = "id_relief > 0 AND LOCATE(bucket, '" . $this->userDVC . "') > 0 order by id_relief DESC";
+         $pageInfo = ['title' => 'Relief - On Going'];
+         $whereMode = "data_check = 0 AND om_check <> 2 AND";
       }
 
+      if ($_SESSION['userTipe'] == "admin") {
+         $where = $whereMode . " id_relief > 0 ORDER BY id_relief DESC";
+      } elseif ($_SESSION['userTipe'] == "staff") {
+         $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief DESC";
+      } else {
+         $where = $whereMode . " LOCATE(bucket, '" . $this->userDVC . "') > 0 ORDER BY id_relief DESC";
+      }
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
       $this->view($view, ['data' => $data, 'pageInfo' => $pageInfo]);

@@ -281,7 +281,7 @@ if (isset($data['pageInfo'])) {
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="<?= $this->BASE_URL ?>Relief" class="nav-link 
+                      <a href="<?= $this->BASE_URL ?>Relief/index/2" class="nav-link 
                     <?php if ($title == 'Relief - Done') {
                       echo 'active';
                     } ?>">
