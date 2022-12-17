@@ -91,7 +91,7 @@ class Relief extends Controller
       }
 
       $cols = 'unic, emp_id, date_, loan_id, bucket, om, tl, remark, repay_amount, dpd, waiver_amount, 4_el, percentage';
-      $vals = "'" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver . "," . $total_el . "," . $percen;
+      $vals = "'" . date('i') . "_" . $emp_id . $date_ . $rep_amount . "','" . $emp_id . "','" . $date_ . "','" . $loan_id . "','" . $bucket . "','" . $om . "','" . $tl . "','" . $remark . "'," . $rep_amount . "," . $dpd . "," . $waiver . "," . $total_el . "," . $percen;
       $query = $this->model('M_DB_1')->insertCols($this->table, $cols, $vals);
       if ($query['errno'] == 0) {
          echo "1";
