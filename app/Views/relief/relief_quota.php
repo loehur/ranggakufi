@@ -31,6 +31,7 @@ foreach ($data['data'] as $d) {
                 <table class="table table-sm" style="padding: 0;">
                   <thead>
                     <th>Team Leader</th>
+                    <th>Emp. ID</th>
                     <th>Division</th>
                     <th>100%</th>
                   </thead>
@@ -40,7 +41,7 @@ foreach ($data['data'] as $d) {
                     foreach ($s as $k => $a) {
 
                       if ($_SESSION['userTipe'] <> "admin") {
-                        if ($a['dvs'] <> $this->userDVC) {
+                        if (strpos($this->userDVC, $a['dvs']) == FALSE) {
                           continue;
                         }
                       }
@@ -60,6 +61,7 @@ foreach ($data['data'] as $d) {
                       echo "</tr>";
                       echo "<tr class='table-borderless'>";
                       echo "<td>" . $tl_name . "</td>";
+                      echo "<td>" . $tl_id . "</td>";
                       echo "<td>" . $bucket . "</td>";
                       echo "<td class='text-right'>" . $a['x100'] . "x</td>";
                       echo "</td>";
