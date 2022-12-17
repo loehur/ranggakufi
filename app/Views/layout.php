@@ -205,50 +205,7 @@ if (isset($data['pageInfo'])) {
               case "om":
               case "qc":
             ?>
-                <li class="nav-item 
-                <?php if (strpos($title, 'SP ') !== FALSE) {
-                  echo 'menu-is-opening menu-open';
-                } ?>">
-                  <a href="#" class="nav-link 
-                <?php if (strpos($title, 'SP ') !== FALSE) {
-                  echo 'active';
-                } ?>">
-                    <i class="nav-icon fas fa-envelope-open-text"></i>
-                    <p>
-                      Surat Peringatan
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
-                  </a>
-                  <ul class="nav nav-treeview" style="display: 
-                <?php if (strpos($title, 'SP ') !== FALSE) {
-                  echo 'block;';
-                } else {
-                  echo 'none;';
-                } ?>">
-                    <li class="nav-item">
-                      <a href="<?= $this->BASE_URL ?>SP/i/1" class="nav-link 
-                    <?php if ($title == 'SP - Active') {
-                      echo 'active';
-                    } ?>">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>
-                          Active
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?= $this->BASE_URL ?>SP/i/2" class="nav-link 
-                    <?php if ($title == 'SP - Historical') {
-                      echo 'active';
-                    } ?>">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>
-                          Historical
-                        </p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+
                 <li class="nav-item 
                 <?php if (strpos($title, 'Relief') !== FALSE) {
                   echo 'menu-is-opening menu-open';
@@ -288,6 +245,61 @@ if (isset($data['pageInfo'])) {
                         <i class="far fa-circle nav-icon"></i>
                         <p>
                           Done
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>Relief/quota" class="nav-link 
+                    <?php if ($title == 'Relief - Quota') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Quota
+                        </p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'menu-is-opening menu-open';
+                } ?>">
+                  <a href="#" class="nav-link 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'active';
+                } ?>">
+                    <i class="nav-icon fas fa-envelope-open-text"></i>
+                    <p>
+                      Surat Peringatan
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview" style="display: 
+                <?php if (strpos($title, 'SP ') !== FALSE) {
+                  echo 'block;';
+                } else {
+                  echo 'none;';
+                } ?>">
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>SP/i/1" class="nav-link 
+                    <?php if ($title == 'SP - Active') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Active
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?= $this->BASE_URL ?>SP/i/2" class="nav-link 
+                    <?php if ($title == 'SP - Historical') {
+                      echo 'active';
+                    } ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                          Historical
                         </p>
                       </a>
                     </li>

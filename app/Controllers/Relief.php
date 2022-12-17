@@ -23,16 +23,38 @@ class Relief extends Controller
       }
 
       if ($_SESSION['userTipe'] == "admin") {
-         $where = $whereMode . " id_relief > 0 ORDER BY id_relief DESC";
+         $where = $whereMode . " id_relief > 0 ORDER BY id_relief ASC LIMIT 50";
       } elseif ($_SESSION['userTipe'] == "staff") {
-         $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief DESC";
+         $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief ASC";
       } else {
-         $where = $whereMode . " LOCATE(bucket, '" . $this->userDVC . "') > 0 ORDER BY id_relief DESC";
+         $where = $whereMode . " LOCATE(bucket, '" . $this->userDVC . "') > 0 ORDER BY id_relief ASC";
       }
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
       $this->view($view, ['data' => $data, 'pageInfo' => $pageInfo]);
    }
+
+   public function quota()
+   {
+      $view = 'relief/relief_quota';
+      $data = array();
+
+
+      if (date("D") == "Mon") {
+         $start_date = date("Y-m-d");
+      } else {
+         $start_date = date('Y-m-d', strtotime('last monday'));
+      }
+
+      $period = $start_date . " to " . date("Y-m-d");
+      $pageInfo = ['title' => 'Relief - Quota'];
+      $where = "request_date >= '" . $start_date . "' ORDER BY bucket ASC";
+
+      $data = $this->model('M_DB_1')->get_where($this->table, $where);
+      $this->view('layout', ['pageInfo' => $pageInfo]);
+      $this->view($view, ['data' => $data, 'period' => $period, 'pageInfo' => $pageInfo]);
+   }
+
 
    public function insert()
    {

@@ -7,7 +7,7 @@
           <div class="card-header border-0">
             <div class="d-flex align-items-start align-items-end">
               <div class="p-1">
-                <?php if ($_SESSION['userTipe'] == "staff") { ?>
+                <?php if ($_SESSION['userTipe'] == "staff" || $_SESSION['userTipe'] == "tl") { ?>
                   <button type="button" class="btn btn-sm btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     + Add Relief
                   </button><?php } ?>
