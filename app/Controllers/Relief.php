@@ -48,7 +48,7 @@ class Relief extends Controller
 
       $period = $start_date . " to " . date("Y-m-d");
       $pageInfo = ['title' => 'Relief - Quota'];
-      $where = "request_date >= '" . $start_date . "' ORDER BY bucket ASC";
+      $where = "request_date >= '" . $start_date . "' AND data_check = 1 ORDER BY bucket ASC";
 
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
