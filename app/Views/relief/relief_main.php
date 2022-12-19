@@ -79,7 +79,7 @@
                         echo "<a href='" . $this->BASE_URL . "Relief/cancel/" . $a['id_relief'] . "/" . $emp_id . "'><span class='ml-2 btn badge badge-danger'>Cancel</span></a>";
                       }
 
-                      echo "<span class='float-right' style='color:#DC7633'><b>" . $a['remark'] . "</b></span>";
+                      echo "<span class='ml-1' style='color:#DC7633'><b>" . $a['remark'] . "</b></span>";
                       echo "</tr>";
                       echo "<tr class='table-borderless " . $id . "'>";
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
