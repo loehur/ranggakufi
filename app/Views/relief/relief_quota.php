@@ -41,7 +41,7 @@ foreach ($data['data'] as $d) {
                     foreach ($s as $k => $a) {
 
                       if ($_SESSION['userTipe'] <> "admin") {
-                        if (strpos($this->userDVC, $a['dvs']) == FALSE) {
+                        if (strpos($this->userDVC, $a['dvs']) === FALSE) {
                           continue;
                         }
                       }
