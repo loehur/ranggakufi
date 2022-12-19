@@ -23,7 +23,7 @@ class Relief extends Controller
       }
 
       if ($_SESSION['userTipe'] == "admin") {
-         $where = $whereMode . " id_relief > 0 ORDER BY id_relief ASC LIMIT 50";
+         $where = $whereMode . " id_relief > 0 ORDER BY id_relief ASC";
       } elseif ($_SESSION['userTipe'] == "staff") {
          $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief ASC";
       } else {
