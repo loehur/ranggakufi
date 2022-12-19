@@ -6,6 +6,26 @@
         <div class="card">
           <div class="card-header border-0">
             <div class="d-flex align-items-start align-items-end">
+              <div class="p-1 mr-auto">
+                <?php if (strlen($data['period']) > 0) { ?>
+                  <form action="<?= $this->BASE_URL; ?>Relief/index/2" method="POST">
+                    <div class="row">
+                      <div class="col">
+                        <select name="st_week" class="tize form-control form-control-sm p-0 m-0" style="width: 200px;">
+                          <?php foreach ($data['optWeek'] as $ow) { ?>
+                            <option value="<?= $ow ?>" <?= ($ow == $data['period']) ? "selected" : "" ?>><?= $ow ?> to WeekEnd</option>
+                          <?php } ?>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                          Check
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                <?php } ?>
+              </div>
               <div class="p-1">
                 <?php if ($_SESSION['userTipe'] == "staff" || $_SESSION['userTipe'] == "tl") { ?>
                   <button type="button" class="btn btn-sm btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -227,7 +247,7 @@
       </div>
       <div class="modal-body">
         <!-- ====================== FORM ========================= -->
-        <form action="<?= $this->BASE_URL; ?>Relief/insert" method="POST" class="insert" enctype="multipart/form-data">
+        <form class="ajax" action="<?= $this->BASE_URL; ?>Relief/insert" method="POST" class="insert" enctype="multipart/form-data">
           <div class="card-body">
             <div class="form-group">
               <div class="row">
@@ -342,7 +362,7 @@
     format: 'yyyy-mm-dd',
   });
 
-  $("form").on("submit", function(e) {
+  $("form.ajax").on("submit", function(e) {
     e.preventDefault();
     $.ajax({
       url: $(this).attr('action'),

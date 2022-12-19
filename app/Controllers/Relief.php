@@ -12,11 +12,54 @@ class Relief extends Controller
    public function index($mode = 1)
    {
       $view = 'relief/relief_main';
-      $data = array();
+      $data = [];
+      $optDate = [];
+      $period = "";
 
       if ($mode == 2) {
          $pageInfo = ['title' => 'Relief - Done'];
-         $whereMode = "om_check = 2 OR data_check <> 0 AND";
+
+         //WEEKS ===============================
+
+         if (!isset($_POST['st_week'])) {
+            if (date("D") == "Mon") {
+               $st_week = date("Y-m-d");
+            } else {
+               $st_week = date('Y-m-d', strtotime('last monday'));
+            }
+         } else {
+            $st_week = $_POST['st_week'];
+         }
+
+         $en_week = date('Y-m-d', strtotime('+6 days', strtotime($st_week)));
+
+         $startDate = "2022-12-12";
+
+         if (date("D") == "Mon") {
+            $lastSunday = date("Y-m-d");
+         } else {
+            $lastSunday = date('Y-m-d', strtotime('last monday'));
+         }
+
+         $no = 0;
+         $startWeek = $lastSunday;
+         $max = 10000;
+
+         while ($no < $max) {
+            $optDate[$no] = $startWeek;
+
+            if ($startWeek > $startDate) {
+               $startWeek = date('Y-m-d', strtotime('-7 days', strtotime($startWeek)));
+               $no++;
+            } else {
+               break;
+            }
+         }
+
+         $period = $st_week;
+         //========================================================
+
+         $whereMode = "om_check = 2 OR data_check <> 0 AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND ";
       } else {
          $pageInfo = ['title' => 'Relief - On Going'];
          $whereMode = "data_check = 0 AND om_check <> 2 AND";
@@ -31,7 +74,8 @@ class Relief extends Controller
       }
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
       $this->view('layout', ['pageInfo' => $pageInfo]);
-      $this->view($view, ['data' => $data, 'pageInfo' => $pageInfo]);
+
+      $this->view($view, ['data' => $data, 'period' => $period, 'pageInfo' => $pageInfo, 'optWeek' => $optDate]);
    }
 
    public function quota()
