@@ -40,11 +40,11 @@ foreach ($data['data'] as $d) {
 
                     foreach ($s as $k => $a) {
 
-                      if ($_SESSION['userTipe'] <> "admin") {
-                        if (strpos($this->userDVC, $a['dvs']) === FALSE) {
-                          continue;
-                        }
-                      }
+                      // if ($_SESSION['userTipe'] <> "admin") {
+                      //   if (strpos($this->userDVC, $a['dvs']) === FALSE) {
+                      //     continue;
+                      //   }
+                      // }
 
                       $tl_id = $k;
                       $bucket = $a['dvs'];
