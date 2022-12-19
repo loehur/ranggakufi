@@ -59,7 +59,7 @@ class Relief extends Controller
          $period = $st_week;
          //========================================================
 
-         $whereMode = "om_check = 2 OR data_check <> 0 AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND ";
+         $whereMode = "(om_check = 2 OR data_check <> 0) AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND";
       } else {
          $pageInfo = ['title' => 'Relief - On Going'];
          $whereMode = "data_check = 0 AND om_check <> 2 AND";
