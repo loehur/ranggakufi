@@ -1,3 +1,22 @@
+<style>
+  .blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+  }
+
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+</style>
+
 <?php $title = $data['pageInfo']['title']; ?>
 <div class="content">
   <div class="container-fluid">
@@ -133,8 +152,21 @@
                             echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
                           }
                         }
+
                         if ($a['data_check'] == 0) {
-                          echo "<td><small>Admin Check</small><br>Checking...</td>";
+
+                          echo "<td>";
+                          if ($a['on_check'] == '') {
+                            echo "<small>Admin Check</small><br>Checking...";
+                          } else {
+                            foreach ($this->dUser as $du) {
+                              if ($du['id_user'] == $a['on_check']) {
+                                $on_check = $du['nama_user'];
+                              }
+                            }
+                            echo "<small>Admin Check</small><br><span class='text-info blink'><i class='fas fa-eye'></i> " . strtoupper($on_check) . "</span>";
+                          }
+                          echo "</td>";
                         } else {
                           foreach ($this->dUser as $du) {
                             if ($du['id_user'] == $data_ap) {
@@ -171,7 +203,18 @@
                             echo "<td><small>Admin Check</small><br><span class='text-danger'><b>OM Rejected</b></span></td>";
                           } else {
                             if ($a['data_check'] == 0) {
-                              echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a></td>";
+                              echo "<td><small>Admin Check</small><br><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/1'><span class='mr-1 btn badge badge-success'>Approve</span></a><a href='" . $this->BASE_URL . "Relief/update_admin/" . $a['id_relief'] . "/2'><span class='btn badge badge-danger'>Reject</span></a><br>";
+                              if ($a['on_check'] == '') {
+                                echo "<a href='" . $this->BASE_URL . "Relief/on_check/" . $a['id_relief'] . "/" . $this->id_user . "'><span class='mr-1 btn badge badge-info'>Check</span></a>";
+                              } else {
+                                foreach ($this->dUser as $du) {
+                                  if ($du['id_user'] == $a['on_check']) {
+                                    $on_check = $du['nama_user'];
+                                  }
+                                }
+                                echo "<span class='text-info blink'><i class='fas fa-eye'></i> " . strtoupper($on_check) . "</span>";
+                              }
+                              echo "</td>";
                             } else {
                               foreach ($this->dUser as $du) {
                                 if ($du['id_user'] == $data_ap) {
@@ -207,7 +250,18 @@
                           echo "<td><small>OM Check</small><br>" . $st_icon . " " . $om_ap . "</small></td>";
 
                           if ($a['data_check'] == 0) {
-                            echo "<td><small>Admin Check</small><br>Checking...</td>";
+                            echo "<td>";
+                            if ($a['on_check'] == '') {
+                              echo "<small>Admin Check</small><br>Checking...";
+                            } else {
+                              foreach ($this->dUser as $du) {
+                                if ($du['id_user'] == $a['on_check']) {
+                                  $on_check = $du['nama_user'];
+                                }
+                              }
+                              echo "<small>Admin Check</small><br><span class='text-info blink'><i class='fas fa-eye'></i> " . strtoupper($on_check) . "</span>";
+                            }
+                            echo "</td>";
                           } else {
                             foreach ($this->dUser as $du) {
                               if ($du['id_user'] == $data_ap) {

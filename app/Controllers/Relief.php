@@ -168,7 +168,7 @@ class Relief extends Controller
          exit();
       }
 
-      $set = "data_date ='" . date('Y-m-d') . "', data_check =" . $st . ", data_approved = '" . $this->id_user . "'";
+      $set = "on_check = '', data_date ='" . date('Y-m-d') . "', data_check =" . $st . ", data_approved = '" . $this->id_user . "'";
       $where = "id_relief = '" . $id . "'";
       $update = $this->model('M_DB_1')->update($this->table, $set, $where);
       if ($update['errno'] == 0) {
@@ -191,6 +191,24 @@ class Relief extends Controller
          $this->index();
       } else {
          print_r($delete['error']);
+      }
+   }
+
+
+   public function on_check($id, $id_user)
+   {
+      if (!isset($this->id_user) || strlen($this->id_user) == 0) {
+         $this->index();
+         exit();
+      }
+
+      $set = "on_check ='" . $id_user . "'";
+      $where = "id_relief = '" . $id . "'";
+      $update = $this->model('M_DB_1')->update($this->table, $set, $where);
+      if ($update['errno'] == 0) {
+         $this->index();
+      } else {
+         print_r($update['error']);
       }
    }
 }
