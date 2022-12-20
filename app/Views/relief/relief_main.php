@@ -46,7 +46,7 @@
                 <?php } ?>
               </div>
               <div class="p-1">
-                <?php if ($_SESSION['userTipe'] == "staff" || $_SESSION['userTipe'] == "tl") { ?>
+                <?php if (strlen($data['period']) == 0 && ($_SESSION['userTipe'] == "staff" || $_SESSION['userTipe'] == "tl")) { ?>
                   <button type="button" class="btn btn-sm btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     + Add Relief
                   </button><?php } ?>
