@@ -92,7 +92,7 @@
                       }
 
                       echo "<tr class='table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
-                      echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1' style='cursor:pointer' id='" . $id . "' data-loan='" . $loan_id . "' onclick='copyText(" . $id . ")'><b>#" . $loan_id . "</b></span></h7>";
+                      echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1' style='cursor:pointer' id='" . $id . "' data-loan='" . $loan_id . "' onclick='copyText(" . $id . ")'><b>#" . $loan_id . "</b></span></h7> <span class='text-info' id='c" . $id . "'></span>";
 
                       if ($a['om_check'] == 0 && $this->id_user == $emp_id) {
                         echo "<a href='" . $this->BASE_URL . "Relief/cancel/" . $a['id_relief'] . "/" . $emp_id . "'><span class='ml-2 btn badge badge-danger'>Cancel</span></a>";
@@ -440,16 +440,15 @@
   });
 
   function copyText(id) {
-    var defaulHtml = $("span#" + id).html();
     var copyText = $("span#" + id).attr('data-loan');
     navigator.clipboard.writeText(copyText);
-    $("span#" + id).html($("span#" + id).html() + " - Copied");
+    $("span#c" + id).html("Copied!");
     setTimeout(function() {
-      reset_copy(id, defaulHtml)
+      reset_copy(id)
     }, 5000);
   }
 
-  function reset_copy(id, defaulHtml) {
-    $("span#" + id).html(defaulHtml);
+  function reset_copy(id) {
+    $("span#c" + id).html("");
   }
 </script>
