@@ -109,7 +109,7 @@
                       echo "</tr>";
                       echo "<tr class='table-borderless " . $id . "'>";
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
-                      echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small> <span class='text-success'><b>(" . $used100 . "x)</b></span></td>";
+                      echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small> <span class='text-success'><b>" . $used100 . "x</b></span></td>";
                       echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
                       echo "<td class='text-right'><small>Total 4 Elements</small><br>" . number_format($a['4_el']) . "</td>";
                       echo "<td class='text-right'><small>Amount</small><br>" . number_format($a['repay_amount']) . "</td>";
