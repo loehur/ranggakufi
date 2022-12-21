@@ -27,7 +27,7 @@
             <div class="d-flex align-items-start align-items-end">
               <div class="p-1 mr-auto">
                 <?php if (strlen($data['period']) > 0) { ?>
-                  <form action="<?= $this->BASE_URL; ?>Relief/index/2" method="POST">
+                  <form action="<?= $this->BASE_URL; ?>Relief/index/<?= $data['mode'] ?>" method="POST">
                     <div class="row">
                       <div class="col">
                         <select name="st_week" class="tize form-control form-control-sm p-0 m-0" style="width: 200px;">
@@ -98,11 +98,18 @@
                         echo "<a href='" . $this->BASE_URL . "Relief/cancel/" . $a['id_relief'] . "/" . $emp_id . "'><span class='ml-2 btn badge badge-danger'>Cancel</span></a>";
                       }
 
+                      $used100 = 0;
+                      foreach ($data['kuota'] as $key => $k) {
+                        if ($key == $a['tl']) {
+                          $used100 = $k['x100'];
+                        }
+                      }
+
                       echo "<span class='ml-1' style='color:#DC7633'><b>" . $a['remark'] . "</b></span>";
                       echo "</tr>";
                       echo "<tr class='table-borderless " . $id . "'>";
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
-                      echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small></td>";
+                      echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small> <span class='text-success'><b>(" . $used100 . "x)</b></span></td>";
                       echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
                       echo "<td class='text-right'><small>Total 4 Elements</small><br>" . number_format($a['4_el']) . "</td>";
                       echo "<td class='text-right'><small>Amount</small><br>" . number_format($a['repay_amount']) . "</td>";

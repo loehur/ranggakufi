@@ -16,53 +16,52 @@ class Relief extends Controller
       $optDate = [];
       $period = "";
 
+      if (!isset($_POST['st_week'])) {
+         if (date("D") == "Mon") {
+            $st_week = date("Y-m-d");
+         } else {
+            $st_week = date('Y-m-d', strtotime('last monday'));
+         }
+      } else {
+         $st_week = $_POST['st_week'];
+      }
+      $en_week = date('Y-m-d', strtotime('+6 days', strtotime($st_week)));
+      $period = $st_week;
+
+      //WEEKS ===============================
+
+      $startDate = "2022-12-12";
+
+      if (date("D") == "Mon") {
+         $lastSunday = date("Y-m-d");
+      } else {
+         $lastSunday = date('Y-m-d', strtotime('last monday'));
+      }
+
+      $no = 0;
+      $startWeek = $lastSunday;
+      $max = 10000;
+
+      while ($no < $max) {
+         $optDate[$no] = $startWeek;
+
+         if ($startWeek > $startDate) {
+            $startWeek = date('Y-m-d', strtotime('-7 days', strtotime($startWeek)));
+            $no++;
+         } else {
+            break;
+         }
+      }
+
+      //========================================================
+
       if ($mode == 2) {
          $pageInfo = ['title' => 'Relief - Done'];
-
-         //WEEKS ===============================
-
-         if (!isset($_POST['st_week'])) {
-            if (date("D") == "Mon") {
-               $st_week = date("Y-m-d");
-            } else {
-               $st_week = date('Y-m-d', strtotime('last monday'));
-            }
-         } else {
-            $st_week = $_POST['st_week'];
-         }
-
-         $en_week = date('Y-m-d', strtotime('+6 days', strtotime($st_week)));
-
-         $startDate = "2022-12-12";
-
-         if (date("D") == "Mon") {
-            $lastSunday = date("Y-m-d");
-         } else {
-            $lastSunday = date('Y-m-d', strtotime('last monday'));
-         }
-
-         $no = 0;
-         $startWeek = $lastSunday;
-         $max = 10000;
-
-         while ($no < $max) {
-            $optDate[$no] = $startWeek;
-
-            if ($startWeek > $startDate) {
-               $startWeek = date('Y-m-d', strtotime('-7 days', strtotime($startWeek)));
-               $no++;
-            } else {
-               break;
-            }
-         }
-
-         $period = $st_week;
-         //========================================================
 
          $whereMode = "(om_check = 2 OR data_check <> 0) AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND";
       } else {
          $pageInfo = ['title' => 'Relief - On Going'];
-         $whereMode = "data_check = 0 AND om_check <> 2 AND";
+         $whereMode = "(data_check = 0 AND om_check <> 2) AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND";
       }
 
       if ($_SESSION['userTipe'] == "admin") {
@@ -73,9 +72,23 @@ class Relief extends Controller
          $where = $whereMode . " LOCATE(bucket, '" . $this->userDVC . "') > 0 ORDER BY id_relief ASC";
       }
       $data = $this->model('M_DB_1')->get_where($this->table, $where);
-      $this->view('layout', ['pageInfo' => $pageInfo]);
 
-      $this->view($view, ['data' => $data, 'period' => $period, 'pageInfo' => $pageInfo, 'optWeek' => $optDate]);
+      //KUOTA
+      $where = "(request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "') AND (data_check = 1) ORDER BY bucket ASC";
+      $data_kuota = $this->model('M_DB_1')->get_where($this->table, $where);
+      $s = [];
+      foreach ($data_kuota as $d) {
+         if (isset($s[$d['tl']][100])) {
+            $s[$d['tl']][100] += $d['percentage'];
+         } else {
+            $s[$d['tl']][100] = $d['percentage'];
+         }
+         $s[$d['tl']]['x100'] = floor(($s[$d['tl']][100]) / 100);
+         $s[$d['tl']]['dvs'] = $d['bucket'];
+      }
+
+      $this->view('layout', ['pageInfo' => $pageInfo]);
+      $this->view($view, ['data' => $data, 'period' => $period, 'pageInfo' => $pageInfo, 'optWeek' => $optDate, "mode" => $mode, "kuota" => $s]);
    }
 
    public function quota()
