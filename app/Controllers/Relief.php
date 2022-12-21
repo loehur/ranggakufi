@@ -57,7 +57,6 @@ class Relief extends Controller
 
       if ($mode == 2) {
          $pageInfo = ['title' => 'Relief - Done'];
-
          $whereMode = "(om_check = 2 OR data_check <> 0) AND request_date >= '" . $st_week . "' AND request_date <= '" . $en_week . "' AND";
       } else {
          $pageInfo = ['title' => 'Relief - On Going'];
@@ -65,7 +64,11 @@ class Relief extends Controller
       }
 
       if ($_SESSION['userTipe'] == "admin") {
-         $where = $whereMode . " id_relief > 0 ORDER BY id_relief ASC";
+         if ($mode == 2) {
+            $where = $whereMode . " id_relief > 0 ORDER BY id_relief DESC";
+         } else {
+            $where = $whereMode . " id_relief > 0 ORDER BY id_relief ASC";
+         }
       } elseif ($_SESSION['userTipe'] == "staff") {
          $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief ASC";
       } else {
