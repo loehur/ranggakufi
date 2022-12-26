@@ -1,13 +1,14 @@
 <?php
 $s = [];
 foreach ($data['data'] as $d) {
-  if (isset($s[$d['tl']][100])) {
-    $s[$d['tl']][100] += $d['percentage'];
-  } else {
-    $s[$d['tl']][100] = $d['percentage'];
+  if ($d['percentage'] == 100) {
+    if (isset($s[$d['tl']]['x100'])) {
+      $s[$d['tl']]['x100'] += 1;
+    } else {
+      $s[$d['tl']]['x100'] = 1;
+    }
+    $s[$d['tl']]['dvs'] = $d['bucket'];
   }
-  $s[$d['tl']]['x100'] = floor(($s[$d['tl']][100]) / 100);
-  $s[$d['tl']]['dvs'] = $d['bucket'];
 }
 
 ?>
