@@ -119,9 +119,11 @@ class Relief extends Controller
 
    public function insert()
    {
-      if ($_SESSION['userTipe'] != "staff" || $_SESSION['userTipe'] != "tl") {
-         echo "Account Forbidden";
-         exit();
+      if ($_SESSION['userTipe'] != "staff") {
+         if ($_SESSION['userTipe'] != "tl") {
+            echo "Account Forbidden";
+            exit();
+         }
       }
 
       $loan_id = $_POST['loan_id'];
