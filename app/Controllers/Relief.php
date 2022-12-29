@@ -71,6 +71,8 @@ class Relief extends Controller
          }
       } elseif ($_SESSION['userTipe'] == "staff") {
          $where = $whereMode . " emp_id = '" . $this->id_user . "' ORDER BY id_relief ASC";
+      } elseif ($_SESSION['userTipe'] == "tl") {
+         $where = $whereMode . " tl = '" . $this->id_user . "' ORDER BY id_relief ASC";
       } else {
          $where = $whereMode . " LOCATE(bucket, '" . $this->userDVC . "') > 0 ORDER BY id_relief ASC";
       }

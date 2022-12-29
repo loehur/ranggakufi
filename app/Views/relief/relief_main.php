@@ -41,6 +41,16 @@
                           Check
                         </button>
                       </div>
+                      <?php if ($_SESSION['userTipe'] == "admin") { ?>
+                        <div class="col">
+                          <select name="tl" class="tizeTL form-control form-control-sm p-0 m-0" style="width: 300px;">
+                            <option value="ALL">ALL Team Leader</option>
+                            <?php foreach ($this->dTL as $a) { ?>
+                              <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
+                            <?php } ?>
+                          </select>
+                        </div>
+                      <?php  } ?>
                     </div>
                   </form>
                 <?php } ?>
@@ -67,6 +77,7 @@
                       $id =  $a['id_relief'];
                       $emp_id =  $a['emp_id'];
                       $om_name = $a['om'];
+                      $tl = $a['tl'];
                       $tl_name = $a['tl'];
                       $loan_id = $a['loan_id'];
 
@@ -91,7 +102,7 @@
                         }
                       }
 
-                      echo "<tr class='table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
+                      echo "<tr class='show " . $tl . " table-borderless " . $id . "' style='border-top: 1px dashed silver'>";
                       echo "<td colspan='10' class='pb-0'><h7><small>Loan ID </small> <span class='badge badge-info p-1' style='cursor:pointer' id='" . $id . "' data-loan='" . $loan_id . "' onclick='copyText(" . $id . ")'><b>#" . $loan_id . "</b></span></h7> <span class='text-info' id='c" . $id . "'></span>";
 
                       if ($a['om_check'] == 0 && $this->id_user == $emp_id) {
@@ -107,7 +118,7 @@
 
                       echo "<span class='ml-1' style='color:#DC7633'><b>" . $a['remark'] . "</b></span>";
                       echo "</tr>";
-                      echo "<tr class='table-borderless " . $id . "'>";
+                      echo "<tr class='show " . $tl . " table-borderless " . $id . "'>";
                       echo "<td><small>Relief: #" . $id . "<br>" . $emp_id . "<br><b><span>" . $emp_name . "</span></small></td>";
                       echo "<td><b><small><b>Bucket:</b> " . $bucket . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small> <span class='text-success'><b>" . $used100 . "x</b></span></td>";
                       echo "<td><small>Date/Request Date</small><br>" . $a['date_'] . "<br>" . $a['request_date'] . "</td>";
@@ -417,6 +428,18 @@
 <script>
   $(document).ready(function() {
     $('select.tize').selectize();
+
+    $('select.tizeTL').selectize({
+      onChange: function() {
+        var id = this.getValue();
+        if (id == 'ALL') {
+          $("tr.show").removeClass("d-none");
+        } else {
+          $("tr.show").addClass("d-none");
+          $("tr." + id).removeClass("d-none");
+        }
+      }
+    });
   });
 
   $("#dp1").datepicker({
