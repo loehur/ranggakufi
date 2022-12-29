@@ -44,7 +44,7 @@
                       <?php if ($_SESSION['userTipe'] == "admin") { ?>
                         <div class="col">
                           <select name="tl" class="tizeTL form-control form-control-sm p-0 m-0" style="width: 300px;">
-                            <option value="ALL">ALL Team Leader</option>
+                            <option value="ALL">ALL TEAM LEADER</option>
                             <?php foreach ($this->dTL as $a) { ?>
                               <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
                             <?php } ?>
