@@ -353,7 +353,7 @@
                 <div class="col">
                   <label for="exampleInputEmail1">Bucket</label>
                   <select name="bucket" class="form-control form-control-sm" required>
-                    <option selected value="<?= $this->$userDVC ?>"><?= $this->userDVC ?></option>
+                    <option selected value="<?= $this->userDVC ?>"><?= $this->userDVC ?></option>
                   </select>
                 </div>
               </div>

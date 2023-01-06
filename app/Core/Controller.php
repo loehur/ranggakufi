@@ -28,12 +28,22 @@ class Controller extends URL
                 } elseif ($_SESSION['userTipe'] == 'cs' || $_SESSION['userTipe'] == 'qc') {
                     $this->admin = 0;
                     $this->privilege = 0;
-                } elseif ($_SESSION['userTipe'] == 'staff' || $_SESSION['userTipe'] == 'tl' || $_SESSION['userTipe'] == 'om') {
+                } elseif ($_SESSION['userTipe'] == 'staff') {
                     $this->admin = 0;
                     $this->privilege = 0;
                     $this->userDVC = $_SESSION['user']['dvc'];
                     $this->userOM = $_SESSION['user']['om'];
                     $this->userTL = $_SESSION['user']['tl'];
+                } elseif ($_SESSION['userTipe'] == 'tl') {
+                    $this->admin = 0;
+                    $this->privilege = 0;
+                    $this->userDVC = $_SESSION['user']['dvc'];
+                    $this->userOM = $_SESSION['user']['om'];
+                    $this->userTL = $_SESSION['user']['id'];
+                } elseif ($_SESSION['userTipe'] == 'om') {
+                    $this->admin = 0;
+                    $this->privilege = 0;
+                    $this->userOM = $_SESSION['user']['id'];
                 }
 
                 $this->id_user = $_SESSION['user']['id'];
