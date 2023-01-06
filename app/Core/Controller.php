@@ -43,6 +43,7 @@ class Controller extends URL
                 } elseif ($_SESSION['userTipe'] == 'om') {
                     $this->admin = 0;
                     $this->privilege = 0;
+                    $this->userDVC = $_SESSION['user']['dvc'];
                     $this->userOM = $_SESSION['user']['id'];
                 }
 
