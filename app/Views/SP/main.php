@@ -101,7 +101,7 @@ $sp_final = [];
                         echo "<td><small>" . $emp_id . "</small><br><b><span>" . $id_name . "</span><br></td>";
                         echo "<td><b><small><b>Division:</b> " . $dvs . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small></td>";
                         echo "<td><small>SP Date</small><br>" . $sp_date . "</td>";
-                        echo "<td><b class='text-primary'>SP" . $a['sp'] . "</b> - Final: <b class='text-danger'>SP" . $sp_final[$sp_id] . "</b><br><small><b>QC</b>: " . $qc . "</small></td>";
+                        echo "<td><b class='text-primary'>SP" . $a['sp'] . "</b> - <b class='text-danger'>SP" . $sp_final[$sp_id] . "</b><br><small><b>QC</b>: " . $qc . "</small></td>";
                         echo "<td><small>Remark</small><br><span style='color:#DC7633'><b>" . $a['remark'] . "</b></span></td>";
                         echo "<td><small>Expired Date</small><br>" . $exp_date . "</td>";
                         echo "</tr>";
