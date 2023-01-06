@@ -310,7 +310,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -353,12 +352,8 @@
                 </div>
                 <div class="col">
                   <label for="exampleInputEmail1">Bucket</label>
-                  <select name="bucket" class="tize form-control form-control-sm p-0 m-0" required>
-                    <option value="" selected disabled>...</option>
-                    <?php foreach ($this->dDvs as $a) { ?>
-                      <option value="<?= $a['tc_name'] ?>"><?= $a['tc_name'] ?></option>
-                    <?php } ?>
-                  </select>
+                  <select name="bucket" class="form-control form-control-sm" required>
+                    <option selected value="<?= $this->$userDVC ?>"><?= $this->userDVC ?></option>
                   </select>
                 </div>
               </div>
@@ -367,11 +362,15 @@
               <div class="row">
                 <div class="col">
                   <label for="exampleInputEmail1">TL</label>
-                  <select name="tl" class="tize form-control form-control-sm p-0 m-0" required>
-                    <option value="" selected disabled>...</option>
-                    <?php foreach ($this->dTL as $a) { ?>
-                      <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
-                    <?php } ?>
+                  <?php
+                  $userTL = $this->userTL;
+                  foreach ($this->dTL as $dt) {
+                    if ($this->userTL == $dt['employee_id']) {
+                      $userTL = $dt['employee_name'];
+                    }
+                  } ?>
+                  <select name="tl" class="form-control form-control-sm" required>
+                    <option selected value="<?= $this->userTL ?>"><?= $userTL ?> [<?= $this->userTL ?>]</option>
                   </select>
                 </div>
               </div>
@@ -380,11 +379,15 @@
               <div class="row">
                 <div class="col">
                   <label for="exampleInputEmail1">OM</label>
-                  <select name="om" class="tize form-control form-control-sm p-0 m-0" required>
-                    <option value="" selected disabled>...</option>
-                    <?php foreach ($this->dOM as $a) { ?>
-                      <option value="<?= $a['employee_id'] ?>"><?= $a['employee_name'] ?> [<?= $a['employee_id'] ?>]</option>
-                    <?php } ?>
+                  <?php
+                  $userOM = $this->userOM;
+                  foreach ($this->dOM as $do) {
+                    if ($this->userOM == $do['employee_id']) {
+                      $userOM = $do['employee_name'];
+                    }
+                  } ?>
+                  <select name="om" class="form-control form-control-sm" required>
+                    <option selected value="<?= $this->userOM ?>"><?= $userOM ?> [<?= $this->userOM ?>]</option>
                   </select>
                 </div>
               </div>

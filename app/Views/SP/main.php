@@ -1,4 +1,6 @@
-<?php $title = $data['pageInfo']['title']; ?>
+<?php $title = $data['pageInfo']['title'];
+$sp_final = [];
+?>
 
 <div class="content">
   <div class="container-fluid">
@@ -17,6 +19,19 @@
                 </div>
               </div>
             <?php } ?>
+            <?php
+            foreach ($data['data'] as $key => $d) {
+              foreach ($d as $a) {
+                $sp_id =  $a['id_sp'];
+                if (isset($sp_final[$sp_id])) {
+                  $sp_final[$sp_id] += $a['sp'];
+                } else {
+                  $sp_final[$sp_id] = $a['sp'];
+                }
+              }
+            }
+            ?>
+
 
             <div class="card-body p-0 pt-1 mt-2">
               <div class="row">
@@ -69,9 +84,15 @@
 
                         $exp_date    = date('Y-m-d', strtotime('+90 days', strtotime($sp_date)));
                         $sp_show = "";
-                        if ($sp > 1) {
-                          $sp_show = "<span class='text-danger'> (SP" . $sp . ")</span>";
+
+                        $qc = $a['qc_id'];
+                        foreach ($this->dQC as $lqc) {
+                          if ($lqc['employee_id'] == $qc) {
+                            $qc = $lqc['employee_name'];
+                          }
                         }
+
+
                         echo "<tr class='table-borderless " . $sp_id . "' style='border-top: 1px dashed silver'>";
                         echo "<td colspan='9' class='pb-0'><h7><small>SP ID </small> <span class='badge badge-info p-1'><b>#" . $sp_id . "</b></span></h7> <a target='_blank' href='" . $this->BASE_URL . $a['file_path'] . $a['file_name'] . "'><span class='btn badge badge-primary'><i class='far fa-eye'></i> SP View</span></a>";
                         echo "</td>";
@@ -80,7 +101,7 @@
                         echo "<td><small>" . $emp_id . "</small><br><b><span>" . $id_name . "</span><br></td>";
                         echo "<td><b><small><b>Division:</b> " . $dvs . " <br><b>OM:</b> " . $om_name . " <b><br>TL:</b> " . $tl_name . "</small></td>";
                         echo "<td><small>SP Date</small><br>" . $sp_date . "</td>";
-                        echo "<td><small>SP</small><br><b>SP" . $a['sp'] . $sp_show . "</b></td>";
+                        echo "<td><b class='text-primary'>SP" . $a['sp'] . "</b> - Final: <b class='text-danger'>SP" . $sp_final[$sp_id] . "</b><br><small><b>QC</b>: " . $qc . "</small></td>";
                         echo "<td><small>Remark</small><br><span style='color:#DC7633'><b>" . $a['remark'] . "</b></span></td>";
                         echo "<td><small>Expired Date</small><br>" . $exp_date . "</td>";
                         echo "</tr>";

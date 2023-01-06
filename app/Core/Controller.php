@@ -6,6 +6,9 @@ class Controller extends URL
 {
     public $data_user;
 
+    public $admin, $privilege, $id_user, $userDVC, $userOM, $userTL, $nama_user;
+    public $dPrivilege, $dHour, $dDvs, $dEmp, $dUser, $dStaff, $dTL, $dOM, $dQC, $dCS, $dEmpMerge;
+
     public function __construct()
     {
         if (isset($_SESSION['data_user'])) {
@@ -45,7 +48,9 @@ class Controller extends URL
                 $this->dStaff = $_SESSION['data']['staff'];
                 $this->dTL = $_SESSION['data']['tl'];
                 $this->dOM = $_SESSION['data']['om'];
+                $this->dQC = $_SESSION['data']['qc'];
                 $this->dCS = $_SESSION['data']['cs'];
+
                 $this->dEmpMerge = array_merge($this->dStaff, $this->dTL, $this->dOM);
             }
         }
@@ -107,6 +112,7 @@ class Controller extends URL
             'staff' => $this->model('M_DB_1')->get_order('master_staff', 'employee_name ASC'),
             'tl' => $this->model('M_DB_1')->get_order('master_tl', 'employee_name ASC'),
             'om' => $this->model('M_DB_1')->get_order('master_om', 'employee_name ASC'),
+            'qc' => $this->model('M_DB_1')->get_order('master_qc', 'employee_name ASC'),
             'cs' => $this->model('M_DB_1')->get_order('master_cs', 'employee_name ASC'),
             'hour' => $this->model('M_DB_1')->get_order('hour_list', 'hour_id ASC'),
         );

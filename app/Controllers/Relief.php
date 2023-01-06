@@ -2,6 +2,8 @@
 
 class Relief extends Controller
 {
+   public $table;
+
    public function __construct()
    {
       $this->session_cek();
