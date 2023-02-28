@@ -3,6 +3,8 @@
 class NotifAPI extends Controller
 {
 
+   public $table;
+
    public function __construct()
    {
       $this->table = 'notif';
