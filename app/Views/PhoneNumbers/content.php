@@ -197,7 +197,7 @@
             type: $(this).attr("method"),
             success: function(res) {
                 if (res == 0) {
-                    $("tr#expand_" + kufi).load('<?= $this->BASE_URL ?>PhoneNumbers/expand/' + kufi);
+                    content();
                 } else {
                     alert(res);
                 }
