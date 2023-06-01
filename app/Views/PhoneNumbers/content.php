@@ -104,17 +104,29 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label>Remark</label>
-                                    <input type="text" name="remark" class="form-control" required>
+                                    <label for="exampleFormControlSelect1">Contact Type</label>
+                                    <select class="form-control" name="mode" required>
+                                        <option></option>
+                                        <option value="hp">No Handphone</option>
+                                        <option value="sosmed">Sosial Media</option>
+                                    </select>
                                 </div>
                                 <div class="col">
-                                    <label>No Handphone dan Sosial Media</label>
+                                    <label>Contact</label>
                                     <div class="input-group mb-2 mr-sm-2">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">62</div>
+                                        <div class="d-none 62_">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">62</div>
+                                            </div>
                                         </div>
                                         <input type="text" name="contact" class="form-control" id="inlineFormInputGroup" required>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label>Remark</label>
+                                    <input type="text" name="remark" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -148,12 +160,15 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label>New Number/Sosmed</label>
+                                    <label>Contact</label>
                                     <div class="input-group mb-2 mr-sm-2">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">62</div>
+                                        <div class="d-none 62_">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">62</div>
+                                            </div>
                                         </div>
-                                        <input type="text" name="new" class="form-control" required>
+                                        <input type="text" name="new" class="form-control" id="inlineFormInputGroup" required>
+                                        <input type="hidden" name="mode">
                                     </div>
                                 </div>
                                 <div class="col">
@@ -203,6 +218,15 @@
                 }
             },
         });
+    });
+
+    $('select[name=mode]').on('change', function() {
+        var mode = this.value;
+        if (mode == "hp") {
+            $("div.62_").removeClass("d-none");
+        } else {
+            $("div.62_").addClass("d-none");
+        }
     });
 
     $("form.qc").on("submit", function(e) {

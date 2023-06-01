@@ -27,7 +27,7 @@
                         <small>Action</small><br>
                         <?php
                         if ($con['status'] <> 2) { ?>
-                            <a class="editQC" href="#" data-bs-toggle="modal" data-bs-target="#modalEdit" data-kufi="<?= $c['employee_id'] ?>" data-id="<?= $c['id_contact'] ?>" data-con="<?= $con['contact'] ?>" data-rm="<?= $con['remark'] ?>">Edit</a> | <a class="deleteNumber" href="#" data-kufi="<?= $c['employee_id'] ?>" data-id="<?= $c['id_contact'] ?>">Delete</a>
+                            <a class="editQC" href="#" data-bs-toggle="modal" data-bs-target="#modalEdit" data-mode="<?= $con['mode'] ?>" data-kufi="<?= $c['employee_id'] ?>" data-id="<?= $c['id_contact'] ?>" data-con="<?= $con['contact'] ?>" data-rm="<?= $con['remark'] ?>">Edit</a> | <a class="deleteNumber" href="#" data-kufi="<?= $c['employee_id'] ?>" data-id="<?= $c['id_contact'] ?>">Delete</a>
                         <?php }
                         ?>
                     </td>
@@ -87,6 +87,15 @@
     $("a.editQC").click(function() {
         $("input[name=id_edit]").val($(this).attr("data-id"));
         $("input[name=kufi_id]").val($(this).attr("data-kufi"));
+        var mode = $(this).attr("data-mode");
+
+        if (mode == "hp") {
+            $("input[name=mode]").val(mode);
+            $("div.62_").removeClass("d-none");
+        } else {
+            $("div.62_").addClass("d-none");
+        }
+
         var oldData = $(this).attr("data-con") + " (" + $(this).attr("data-rm") + ")";
         $("input[name=oldData]").val(oldData);
     });

@@ -53,14 +53,21 @@ class PhoneNumbers extends Controller
       }
 
       $remark = $_POST['remark'];
-      $contact = "62" . $_POST['contact'];
+      $mode = $_POST['mode'];
+
+      if ($mode == "hp") {
+         $contact = "62" . $_POST['contact'];
+      } else {
+         $contact = $_POST['contact'];
+      }
 
       $arr_contact =  [
          "remark" => $remark,
          "contact" => $contact,
          "status" => 0, // 0 staff add, 1 qc edit, 2 qc delete
          "updated" => date("Y-m-d H:i"),
-         "qc" => ""
+         "qc" => "",
+         "mode" => $mode
       ];
 
       $contact_ = serialize($arr_contact);
@@ -195,7 +202,12 @@ class PhoneNumbers extends Controller
       }
 
       $id = $_POST['id_edit'];
-      $new = "62" . $_POST['new'];
+      $mode = $_POST['mode'];
+      if ($mode == "hp") {
+         $new = "62" . $_POST['contact'];
+      } else {
+         $new = $_POST['contact'];
+      }
       $qc_remark = $_POST['qc_remark'];
       $where = "id_contact = " . $id;
 
