@@ -160,7 +160,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label>Contact</label>
+                                    <label>New Contact</label>
                                     <div class="input-group mb-2 mr-sm-2">
                                         <div class="d-none 62_">
                                             <div class="input-group-prepend">
