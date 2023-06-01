@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label for="exampleFormControlSelect1">Contact Type</label>
+                                    <label>Contact Type</label>
                                     <select class="form-control" name="mode" required>
                                         <option></option>
                                         <option value="hp">No Handphone</option>
@@ -152,7 +152,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label for="exampleInputEmail1">Old Data</label>
+                                    <label>Old Data</label>
                                     <input type="text" name="oldData" class="form-control" value="" readonly>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label for="exampleInputEmail1">QC Remark</label>
+                                    <label>QC Remark</label>
                                     <input type="hidden" name="id_edit" value="">
                                     <input type="hidden" name="kufi_id" value="">
                                     <input type="text" name="qc_remark" class="form-control">
@@ -212,7 +212,16 @@
             type: $(this).attr("method"),
             success: function(res) {
                 if (res == 0) {
-                    content();
+                    if (document.querySelector('tr#expand_' + kufi) !== null) {
+                        $("tr#expand_" + kufi).load('<?= $this->BASE_URL ?>PhoneNumbers/expand/' + kufi);
+                    } else {
+                        content();
+                        setTimeout(
+                            function() {
+                                $("tr#expand_" + kufi).load('<?= $this->BASE_URL ?>PhoneNumbers/expand/' + kufi);
+                            },
+                            1000);
+                    }
                 } else {
                     alert(res);
                 }
