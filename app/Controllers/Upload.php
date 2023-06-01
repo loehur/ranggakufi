@@ -2,6 +2,7 @@
 
 class Upload extends Controller
 {
+   public $table, $maxRows, $uploadResult, $dateNow;
    public function __construct()
    {
       $this->session_cek();

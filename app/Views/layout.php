@@ -106,6 +106,17 @@ if (isset($data['pageInfo'])) {
               </a>
             </li>
 
+            <li class="nav-item ">
+              <a href="<?= $this->BASE_URL ?>Profil" class="nav-link 
+              <?php if ($title == 'Profil') : echo 'active';
+              endif ?>">
+                <i class="nav-icon fas fa-user-circle"></i>
+                <p>
+                  Profil
+                </p>
+              </a>
+            </li>
+
             <?php
             switch ($_SESSION['userTipe']) {
               case "admin":
@@ -195,6 +206,27 @@ if (isset($data['pageInfo'])) {
             <?php
                 break;
             } ?>
+
+            <?php
+            switch ($_SESSION['userTipe']) {
+              case "admin":
+              case "staff":
+              case "tl":
+              case "om":
+              case "qc":
+            ?>
+                <li class="nav-item ">
+                  <a href="<?= $this->BASE_URL ?>PhoneNumbers/index/<?= $this->userTipe ?>" class="nav-link 
+              <?php if ($title == 'Phone Numbers') : echo 'active';
+                endif ?>">
+                    <i class="nav-icon fas fa-address-book"></i>
+                    <p>
+                      Phone Numbers
+                    </p>
+                  </a>
+                </li>
+
+            <?php } ?>
 
             <?php
             switch ($_SESSION['userTipe']) {
@@ -316,18 +348,6 @@ if (isset($data['pageInfo'])) {
                 <i class="nav-icon fas fa-check-double"></i>
                 <p>
                   Whatsapp Number Check
-                </p>
-              </a>
-            </li>
-
-
-            <li class="nav-item ">
-              <a href="<?= $this->BASE_URL ?>Profil" class="nav-link 
-              <?php if ($title == 'Profil') : echo 'active';
-              endif ?>">
-                <i class="nav-icon fas fa-user-circle"></i>
-                <p>
-                  Profil
                 </p>
               </a>
             </li>

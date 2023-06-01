@@ -9,7 +9,7 @@
                 Google Authenticator
               </div>
               <div class="col-auto">
-                <?php if ($data['data']['ga'] == 1) {
+                <?php if ($data['ga'] == 1) {
                   echo "<b class='text-success'>ON</b>";
                   if ($_SESSION['userTipe'] == 'admin' || $_SESSION['userTipe'] == 'management') {
                     echo " - <span class='btn badge badge-light' onClick='remove()'><i class='text-danger far fa-trash-alt'></i> Unlink</span>";
@@ -59,8 +59,4 @@
       },
     });
   }
-
-  $('.modal').on('hidden.bs.modal', function(e) {
-    location.reload(true);
-  })
 </script>

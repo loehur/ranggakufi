@@ -4,10 +4,11 @@ require 'app/Config/URL.php';
 
 class Controller extends URL
 {
-    public $data_user;
+    public $data_user, $table;
+    public $admin, $privilege, $id_user, $userDVC, $userOM, $userTL, $nama_user, $userTipe;
+    public $dPrivilege, $dHour, $dDvs, $dEmp, $dUser, $dStaff, $dTL, $dOM, $dQC, $dCS, $dEmpMerge, $dEmpTipe;
 
-    public $admin, $privilege, $id_user, $userDVC, $userOM, $userTL, $nama_user;
-    public $dPrivilege, $dHour, $dDvs, $dEmp, $dUser, $dStaff, $dTL, $dOM, $dQC, $dCS, $dEmpMerge;
+    public $v_viewer, $v_content;
 
     public function __construct()
     {
@@ -47,13 +48,14 @@ class Controller extends URL
                     $this->userOM = $_SESSION['user']['id'];
                 }
 
+                $this->userTipe = $_SESSION['userTipe'];
+
                 $this->id_user = $_SESSION['user']['id'];
                 $this->nama_user = $_SESSION['user']['nama'];
 
                 $this->dPrivilege = $_SESSION['data']['privilege'];
                 $this->dHour = $_SESSION['data']['hour'];
                 $this->dDvs = $_SESSION['data']['divisi'];
-                $this->dEmp = $_SESSION['data']['emp'];
                 $this->dUser = $_SESSION['data']['user'];
 
                 $this->dStaff = $_SESSION['data']['staff'];
@@ -62,70 +64,76 @@ class Controller extends URL
                 $this->dQC = $_SESSION['data']['qc'];
                 $this->dCS = $_SESSION['data']['cs'];
 
-                $this->dEmpMerge = array_merge($this->dStaff, $this->dTL, $this->dOM);
+                $this->dEmpTipe = $_SESSION['data']['employee_tipe'];
+
+                $this->dEmp = array_merge($this->dStaff, $this->dTL, $this->dOM);
+                $this->dEmpMerge = array_merge($this->dStaff, $this->dTL, $this->dOM, $this->dQC);
             }
         }
     }
 
     public function parameter()
     {
-        if ($_SESSION['userTipe'] == 'admin' || $_SESSION['userTipe'] == 'management') {
-            $_SESSION['user'] = array(
-                'nama' => $this->data_user['nama_user'],
-                'id' => $this->data_user['id_user'],
-                'admin' => $this->data_user['admin'],
-                'privilege' => $this->data_user['privilege'],
-            );
-        } elseif ($_SESSION['userTipe'] == 'cs' || ($_SESSION['userTipe'] == 'qc')) {
-            $_SESSION['user'] = array(
-                'nama' => $this->data_user['employee_name'],
-                'id' => $this->data_user['employee_id'],
-                'admin' => 0,
-                'privilege' => 0,
-            );
-        } elseif ($_SESSION['userTipe'] == 'staff') {
-            $_SESSION['user'] = array(
-                'nama' => $this->data_user['employee_name'],
-                'id' => $this->data_user['employee_id'],
-                'admin' => 0,
-                'privilege' => 0,
-                'dvc' => $this->data_user['ticket_category'],
-                'om' => $this->data_user['om'],
-                'tl' => $this->data_user['tl'],
-            );
-        } elseif ($_SESSION['userTipe'] == 'tl') {
-            $_SESSION['user'] = array(
-                'nama' => $this->data_user['employee_name'],
-                'id' => $this->data_user['employee_id'],
-                'admin' => 0,
-                'privilege' => 0,
-                'dvc' => $this->data_user['ticket_category'],
-                'tl' => "",
-                'om' => $this->data_user['om'],
-            );
-        } elseif ($_SESSION['userTipe'] == 'om') {
-            $_SESSION['user'] = array(
-                'nama' => $this->data_user['employee_name'],
-                'id' => $this->data_user['employee_id'],
-                'admin' => 0,
-                'privilege' => 0,
-                'dvc' => $this->data_user['ticket_category'],
-                'tl' => "",
-                'om' => "",
-            );
+        if (isset($_SESSION['userTipe'])) {
+            if ($_SESSION['userTipe'] == 'admin' || $_SESSION['userTipe'] == 'management') {
+                $_SESSION['user'] = array(
+                    'nama' => $this->data_user['nama_user'],
+                    'id' => $this->data_user['id_user'],
+                    'admin' => $this->data_user['admin'],
+                    'privilege' => $this->data_user['privilege'],
+                );
+            } elseif ($_SESSION['userTipe'] == 'cs' || ($_SESSION['userTipe'] == 'qc')) {
+                $_SESSION['user'] = array(
+                    'nama' => $this->data_user['employee_name'],
+                    'id' => $this->data_user['employee_id'],
+                    'admin' => 0,
+                    'privilege' => 0,
+                );
+            } elseif ($_SESSION['userTipe'] == 'staff') {
+                $_SESSION['user'] = array(
+                    'nama' => $this->data_user['employee_name'],
+                    'id' => $this->data_user['employee_id'],
+                    'admin' => 0,
+                    'privilege' => 0,
+                    'dvc' => $this->data_user['ticket_category'],
+                    'om' => $this->data_user['om'],
+                    'tl' => $this->data_user['tl'],
+                );
+            } elseif ($_SESSION['userTipe'] == 'tl') {
+                $_SESSION['user'] = array(
+                    'nama' => $this->data_user['employee_name'],
+                    'id' => $this->data_user['employee_id'],
+                    'admin' => 0,
+                    'privilege' => 0,
+                    'dvc' => $this->data_user['ticket_category'],
+                    'tl' => "",
+                    'om' => $this->data_user['om'],
+                );
+            } elseif ($_SESSION['userTipe'] == 'om') {
+                $_SESSION['user'] = array(
+                    'nama' => $this->data_user['employee_name'],
+                    'id' => $this->data_user['employee_id'],
+                    'admin' => 0,
+                    'privilege' => 0,
+                    'dvc' => $this->data_user['ticket_category'],
+                    'tl' => "",
+                    'om' => "",
+                );
+            }
         }
+
 
         $_SESSION['data'] = array(
             'privilege' => $this->model('M_DB_1')->get('privilege'),
             'divisi' => $this->model('M_DB_1')->get('ticket_category'),
             'user' => $this->model('M_DB_1')->get_order('user', 'nama_user ASC'),
-            'emp' => $this->model('M_DB_1')->get_order('master_tlom', 'employee_name ASC'),
             'staff' => $this->model('M_DB_1')->get_order('master_staff', 'employee_name ASC'),
             'tl' => $this->model('M_DB_1')->get_order('master_tl', 'employee_name ASC'),
             'om' => $this->model('M_DB_1')->get_order('master_om', 'employee_name ASC'),
             'qc' => $this->model('M_DB_1')->get_order('master_qc', 'employee_name ASC'),
             'cs' => $this->model('M_DB_1')->get_order('master_cs', 'employee_name ASC'),
             'hour' => $this->model('M_DB_1')->get_order('hour_list', 'hour_id ASC'),
+            'employee_tipe' => $this->model('M_DB_1')->get('employee_tipe'),
         );
     }
 

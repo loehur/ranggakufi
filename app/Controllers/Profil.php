@@ -53,7 +53,7 @@ class Profil extends Controller
             break;
       }
       $this->view('layout', ['pageInfo' => $pageInfo]);
-      $this->view($view, ['data' => $data]);
+      $this->view($view, $data);
    }
 
    public function removeGA()
