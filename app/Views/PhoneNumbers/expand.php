@@ -48,7 +48,14 @@
                                     <td><small>QC</small><br><?= $this->model('Arr')->get($this->dEmpMerge, "employee_id", "employee_name", $l['qc']) ?></td>
                                     <td><small>Created</small><br><?= $l['created'] ?></td>
                                     <td><small>Updated</small><br><?= $l['updated'] ?></td>
-                                    <td><small>Proof</small><br><a target="_blank" href="<?= $this->BASE_URL ?><?= $l['proof'] ?>"><i class="far fa-image"></i></a></td>
+                                    <td>
+                                        <small>Proof</small><br>
+                                        <?php if ($l['action'] == 1) { ?>
+                                            <a target="_blank" href="<?= $this->BASE_URL ?><?= $l['proof'] ?>"><i class="far fa-image"></i></a>
+                                        <?php } else {
+                                            echo "-";
+                                        } ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </table>
