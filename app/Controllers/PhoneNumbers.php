@@ -204,9 +204,9 @@ class PhoneNumbers extends Controller
       $id = $_POST['id_edit'];
       $mode = $_POST['mode'];
       if ($mode == "hp") {
-         $new = "62" . $_POST['contact'];
+         $new = "62" . $_POST['new'];
       } else {
-         $new = $_POST['contact'];
+         $new = $_POST['new'];
       }
       $qc_remark = $_POST['qc_remark'];
       $where = "id_contact = " . $id;

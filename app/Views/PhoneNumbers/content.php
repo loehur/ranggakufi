@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="col">
                                     <label>Proof (<span class="text-danger">Max. 10mb</span>)</label>
-                                    <input type="file" id="file" name="resi" /> [ <span id="persen"><b>0</b></span><b> %</b> ] Upload Progress
+                                    <input type="file" id="file" name="resi" required /> [ <span id="persen"><b>0</b></span><b> %</b> ] Upload Progress
                                 </div>
                             </div>
                         </div>
